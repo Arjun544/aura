@@ -30,6 +30,13 @@ Future<bool> askPermission({
       icon = IconsaxBold.gallery_add;
       break;
 
+    case 'Microphone':
+      title = "Speak the Moment";
+      description =
+          'To record your voice on Aura, please grant access to your microphone';
+      icon = IconsaxBold.microphone;
+      break;
+
     default:
   }
 

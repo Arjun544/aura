@@ -10,6 +10,7 @@ class AssetsManager {
 
   // Animations assets
   static const String logoAnimation = '$animationsCommon/ai.json';
+  static const String audioWavesAnimation = '$animationsCommon/audio_waves.json';
 
   // // Mood assets
   static const String angryMood = '$emojisCommon/angry.svg';

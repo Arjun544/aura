@@ -16,6 +16,7 @@ class AddMoodScreen extends HookWidget {
   Widget build(BuildContext context) {
     final TabController controller = useTabController(initialLength: 4);
     final selectedImage = useState<XFile?>(null);
+    final recordedVoice = useState<String?>(null);
 
     return Container(
       height: context.height * 0.9,
@@ -82,7 +83,9 @@ class AddMoodScreen extends HookWidget {
                 ImageView(
                   selectedImage: selectedImage,
                 ),
-                const VoiceView(),
+                VoiceView(
+                  recordedVoice: recordedVoice,
+                ),
                 const EmojiView(),
               ],
             ),
