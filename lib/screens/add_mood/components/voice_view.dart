@@ -16,12 +16,12 @@ class VoiceView extends StatefulHookConsumerWidget {
 }
 
 class _VoiceViewState extends ConsumerState<VoiceView> {
-  late RecorderController recorder;
+  late RecorderController recorderController;
   late PlayerController playerController;
 
   @override
   void initState() {
-    recorder = RecorderController()
+    recorderController = RecorderController()
       ..androidEncoder = AndroidEncoder.aac
       ..androidOutputFormat = AndroidOutputFormat.mpeg4
       ..iosEncoder = IosEncoder.kAudioFormatMPEG4AAC
@@ -34,7 +34,8 @@ class _VoiceViewState extends ConsumerState<VoiceView> {
 
   @override
   void dispose() {
-    recorder.dispose();
+    recorderController.dispose();
+    playerController.dispose();
     super.dispose();
   }
 
@@ -48,9 +49,9 @@ class _VoiceViewState extends ConsumerState<VoiceView> {
 
       if (permission) {
         if (isPlaying.value == true) {
-          recorder.reset();
+          recorderController.reset();
 
-          final result = await recorder.stop(false);
+          final result = await recorderController.stop(false);
 
           logSuccess('Recording Stopped with ${result ?? 'No audio found'}');
           widget.recordedVoice.value = result;
@@ -66,7 +67,7 @@ class _VoiceViewState extends ConsumerState<VoiceView> {
         } else {
           widget.recordedVoice.value = null;
 
-          await recorder.record();
+          await recorderController.record();
           isPlaying.value = true;
         }
       }
