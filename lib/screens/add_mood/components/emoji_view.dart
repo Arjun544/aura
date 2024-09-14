@@ -16,7 +16,7 @@ class EmojiView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          height: context.height * 0.5,
+          height: context.height * 0.45,
           width: context.width,
           child: PageView.builder(
             itemCount: moods.length,

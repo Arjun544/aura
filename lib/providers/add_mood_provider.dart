@@ -14,7 +14,7 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
   @override
   FutureOr build() {}
 
-  Future<void> loginAnonymously({
+  Future<void> handleAnalyze({
     required BuildContext context,
   }) async {
     state = const AsyncLoading();

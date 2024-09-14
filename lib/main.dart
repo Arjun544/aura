@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       minTextAdapt: true,
-      useInheritedMediaQuery: true,
+      useInheritedMediaQuery: false,
       child: MaterialApp.router(
         title: 'Aura',
         debugShowCheckedModeBanner: false,
