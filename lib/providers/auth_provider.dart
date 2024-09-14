@@ -7,16 +7,16 @@ import 'package:aura/helpers/show_toast.dart';
 import 'package:aura/services/auth_service.dart';
 
 final anonymousAuthProvider =
-    AutoDisposeAsyncNotifierProvider<AnonymousAuthProvider, void>(
-  () => AnonymousAuthProvider(),
+    AutoDisposeAsyncNotifierProvider<AnonymousAuthNotifier, void>(
+  () => AnonymousAuthNotifier(),
 );
 
 final gmailAuthProvider =
-    AutoDisposeAsyncNotifierProvider<GmailAuthProvider, void>(
-  () => GmailAuthProvider(),
+    AutoDisposeAsyncNotifierProvider<GmailAuthNotifier, void>(
+  () => GmailAuthNotifier(),
 );
 
-class AnonymousAuthProvider extends AutoDisposeAsyncNotifier {
+class AnonymousAuthNotifier extends AutoDisposeAsyncNotifier {
   @override
   FutureOr build() {}
 
@@ -43,7 +43,7 @@ class AnonymousAuthProvider extends AutoDisposeAsyncNotifier {
   }
 }
 
-class GmailAuthProvider extends AutoDisposeAsyncNotifier {
+class GmailAuthNotifier extends AutoDisposeAsyncNotifier {
   @override
   FutureOr build() {}
 

@@ -56,5 +56,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Aura want to access your camera</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Aura want to access your photos</string>
 </dict>
 </plist>
