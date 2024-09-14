@@ -1,3 +1,4 @@
+import 'package:aura/models/mood_model.dart';
 import 'package:aura/widgets/custom_button.dart';
 import 'package:aura/widgets/custom_tabbar.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,6 +18,7 @@ class AddMoodScreen extends HookWidget {
     final TabController controller = useTabController(initialLength: 4);
     final selectedImage = useState<XFile?>(null);
     final recordedVoice = useState<String?>(null);
+    final selectedMood = useState<MoodModel?>(null);
 
     return Container(
       height: context.height * 0.9,
@@ -86,7 +88,9 @@ class AddMoodScreen extends HookWidget {
                 VoiceView(
                   recordedVoice: recordedVoice,
                 ),
-                const EmojiView(),
+                 EmojiView(
+                   selectedMood: selectedMood,
+                 ),
               ],
             ),
           ),
