@@ -1,5 +1,6 @@
-import 'package:aura/models/mood_model.dart';
+import 'package:aura/models/local_mood_model.dart';
 import 'package:aura/providers/add_mood_provider.dart';
+import 'package:aura/utils/moods.dart';
 import 'package:aura/widgets/bubble_text_field.dart';
 import 'package:aura/widgets/close_button.dart';
 import 'package:aura/widgets/custom_button.dart';
@@ -11,7 +12,6 @@ import '../../core/imports/packages_imports.dart';
 import 'components/emoji_view.dart';
 import 'components/image_view.dart';
 import 'components/text_view.dart';
-import 'components/voice_view.dart';
 
 class AddMoodScreen extends HookConsumerWidget {
   const AddMoodScreen({super.key});
@@ -21,12 +21,11 @@ class AddMoodScreen extends HookConsumerWidget {
     final GlobalKey<FormState> formKey =
         useMemoized(() => GlobalKey<FormState>());
 
-    final TabController controller = useTabController(initialLength: 4);
+    final TabController controller = useTabController(initialLength: 3);
     final moodTextController = useTextEditingController();
     final noteController = useTextEditingController();
     final selectedImage = useState<XFile?>(null);
-    final recordedVoice = useState<String?>(null);
-    final selectedMood = useState<MoodModel?>(null);
+    final selectedMood = useState<LocalMoodModel>(moods.first);
 
     final isAnalyzing = ref.watch(addMoodProvider).isLoading;
 
@@ -78,13 +77,6 @@ class AddMoodScreen extends HookConsumerWidget {
                       ),
                     ),
                     Text(
-                      'Voice',
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
                       'Emoji',
                       style: TextStyle(
                         fontSize: 12.sp,
@@ -108,9 +100,6 @@ class AddMoodScreen extends HookConsumerWidget {
                     ImageView(
                       selectedImage: selectedImage,
                     ),
-                    VoiceView(
-                      recordedVoice: recordedVoice,
-                    ),
                     EmojiView(
                       selectedMood: selectedMood,
                     ),
@@ -130,9 +119,18 @@ class AddMoodScreen extends HookConsumerWidget {
                   isLoading: isAnalyzing,
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      await ref
-                          .read(addMoodProvider.notifier)
-                          .handleAnalyze(context: context);
+                      await ref.read(addMoodProvider.notifier).handleAnalyze(
+                            context: context,
+                            type: controller.index == 0
+                                ? 'text'
+                                : controller.index == 1
+                                    ? 'image'
+                                    : 'emoji',
+                            textController: moodTextController,
+                            noteController: noteController,
+                            image: selectedImage,
+                            emoji: selectedMood,
+                          );
                     }
                   }),
               const SizedBox(height: 20),

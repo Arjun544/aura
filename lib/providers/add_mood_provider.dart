@@ -1,10 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
+import 'package:aura/helpers/show_toast.dart';
+import 'package:aura/models/local_mood_model.dart';
 import 'package:aura/screens/add_mood/components/analyze_dialogue.dart';
-import 'package:aura/utils/moods.dart';
+import 'package:aura/services/mood_service.dart';
 import 'package:aura/widgets/custom_dialogue.dart';
+import 'package:image_picker/image_picker.dart';
 
 final addMoodProvider = AutoDisposeAsyncNotifierProvider<AddMoodNotifier, void>(
   () => AddMoodNotifier(),
@@ -16,14 +21,75 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
 
   Future<void> handleAnalyze({
     required BuildContext context,
+    required String type,
+    required TextEditingController textController,
+    required TextEditingController noteController,
+    required ValueNotifier<XFile?> image,
+    required ValueNotifier<LocalMoodModel> emoji,
   }) async {
     state = const AsyncLoading();
-    showCustomDialogue(
-      child: AnalyzeDialogue(
-        mood: moods.first,
-      ),
-    );
+    if (type == 'image' && image.value == null && context.mounted) {
+      state = const AsyncData(null);
+      showToast(context, message: 'Please select an image', status: 'error');
+      return;
+    }
 
-    state = const AsyncData(null);
+    if (type == 'text' && textController.text.isNotEmpty) {
+      final response = await ref.read(moodServiceProvider).detectMoodFromText(
+            text: textController.text.trim(),
+          );
+
+      response.mapBoth(
+        onLeft: (l) {
+          logError(l.error.toString());
+          state = AsyncValue.error(l.error.toString(), StackTrace.current);
+          showToast(context, message: l.error.toString(), status: 'error');
+        },
+        onRight: (data) {
+          if (data.mood != null) {
+            if (context.mounted) {
+              state = const AsyncData(null);
+              showCustomDialogue(
+                child: AnalyzeDialogue(
+                  mood: data.mood!,
+                ),
+              );
+              return;
+            }
+          }
+        },
+      );
+    }
+
+    if (type == 'image' && image.value != null) {
+      // Convert image to base64
+      final bytes = await image.value!.readAsBytes();
+      final base64Image = base64Encode(bytes);
+
+      final response = await ref.read(moodServiceProvider).detectMoodFromImage(
+            image: base64Image,
+          );
+
+      response.mapBoth(
+        onLeft: (l) {
+          logError(l.error.toString());
+          state = AsyncValue.error(l.error.toString(), StackTrace.current);
+          showToast(context, message: l.error.toString(), status: 'error');
+        },
+        onRight: (data) {
+          if (data.mood != null) {
+            if (context.mounted) {
+              state = const AsyncData(null);
+              showCustomDialogue(
+                child: AnalyzeDialogue(
+                  mood: data.mood!,
+                ),
+              );
+              return;
+            }
+          }
+        },
+      );
+    }
   }
 }

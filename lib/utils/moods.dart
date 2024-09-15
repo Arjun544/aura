@@ -1,50 +1,40 @@
 import 'package:aura/core/imports/core_imports.dart';
-import 'package:aura/models/mood_model.dart';
+import 'package:aura/models/local_mood_model.dart';
 
-final List<MoodModel> moods = [
-  MoodModel(
-    mood: 'Joy',
-    emoji: AssetsManager.happyMood,
-    color: AppColors.successColor,
-  ),
-  MoodModel(
-    mood: 'Sadness',
-    emoji: AssetsManager.sadMood,
-    color: Colors.orange,
-  ),
-  MoodModel(
+final List<LocalMoodModel> moods = [
+  LocalMoodModel(
     mood: 'Anger',
     emoji: AssetsManager.angryMood,
     color: Colors.red,
   ),
-  MoodModel(
-    mood: 'Surprise',
-    emoji: AssetsManager.surpriseMood,
-    color: Colors.blue,
-  ),
-  MoodModel(
+  LocalMoodModel(
     mood: 'Disgust',
     emoji: AssetsManager.disgustMood,
     color: Colors.purple,
   ),
-  MoodModel(
-    mood: 'Love',
-    emoji: AssetsManager.loveMood,
-    color: Colors.pink,
+  LocalMoodModel(
+    mood: 'Fear',
+    emoji: AssetsManager.fearMood,
+    color: Colors.amber,
   ),
-  MoodModel(
-    mood: 'Contentment',
-    emoji: AssetsManager.contentmentMood,
+  LocalMoodModel(
+    mood: 'happy',
+    emoji: AssetsManager.happyMood,
     color: AppColors.successColor,
   ),
-  MoodModel(
-    mood: 'Boredom',
-    emoji: AssetsManager.boreMood,
+  LocalMoodModel(
+    mood: 'Neutral',
+    emoji: AssetsManager.neutralMood,
+    color: Colors.grey,
+  ),
+  LocalMoodModel(
+    mood: 'Sadness',
+    emoji: AssetsManager.sadMood,
     color: Colors.orange,
   ),
-  MoodModel(
-    mood: 'Confidence',
-    emoji: AssetsManager.confidenceMood,
-    color: AppColors.primary,
+  LocalMoodModel(
+    mood: 'Surprise',
+    emoji: AssetsManager.surpriseMood,
+    color: Colors.blue,
   ),
 ];

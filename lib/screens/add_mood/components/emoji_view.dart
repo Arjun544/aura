@@ -1,12 +1,12 @@
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
-import 'package:aura/models/mood_model.dart';
+import 'package:aura/models/local_mood_model.dart';
 import 'package:aura/utils/moods.dart';
 import 'package:blobs/blobs.dart';
 import 'package:flutter_svg/svg.dart';
 
 class EmojiView extends StatelessWidget {
-  final ValueNotifier<MoodModel?> selectedMood;
+  final ValueNotifier<LocalMoodModel?> selectedMood;
 
   const EmojiView({super.key, required this.selectedMood});
 
