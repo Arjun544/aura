@@ -1,19 +1,31 @@
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
+import 'package:aura/models/mood_model.dart';
+import 'package:aura/providers/add_mood_provider.dart';
 import 'package:aura/utils/moods.dart';
 import 'package:aura/widgets/custom_button.dart';
 import 'package:aura/widgets/custom_text_button.dart';
 import 'package:blobs/blobs.dart';
 import 'package:flutter_svg/svg.dart';
 
-class AnalyzeDialogue extends StatelessWidget {
-  final String mood;
-  const AnalyzeDialogue({super.key, required this.mood});
+class AnalyzeDialogue extends ConsumerWidget {
+  final MoodModel mood;
+  final TextEditingController note;
+  const AnalyzeDialogue({
+    super.key,
+    required this.mood,
+    required this.note,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    logSuccess(mood.mood.toString());
     final newMood = moods.firstWhere(
-        (element) => element.mood.toLowerCase() == mood.toLowerCase());
+      (element) =>
+          element.mood.toLowerCase() == mood.mood!.toLowerCase() ,
+    );
+
+    final isLoading = ref.watch(addMoodProvider).isLoading;
 
     return Material(
       color: Colors.transparent,
@@ -67,8 +79,14 @@ class AnalyzeDialogue extends StatelessWidget {
                   height: 45.h,
                   width: context.width * 0.4,
                   text: 'Save',
+                  isLoading: isLoading,
                   color: AppColors.primary,
-                  onPressed: () {},
+                  onPressed: () async =>
+                      ref.read(addMoodProvider.notifier).addMood(
+                            context: context,
+                            noteController: note,
+                            mood: mood,
+                          ),
                 ),
               ],
             ),

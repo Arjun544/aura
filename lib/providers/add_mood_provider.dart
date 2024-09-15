@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
 import 'package:aura/helpers/show_toast.dart';
 import 'package:aura/models/local_mood_model.dart';
+import 'package:aura/models/mood_model.dart';
 import 'package:aura/screens/add_mood/components/analyze_dialogue.dart';
 import 'package:aura/services/mood_service.dart';
 import 'package:aura/widgets/custom_dialogue.dart';
@@ -51,7 +51,8 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
               state = const AsyncData(null);
               showCustomDialogue(
                 child: AnalyzeDialogue(
-                  mood: data.mood!,
+                  mood: data,
+                  note: noteController,
                 ),
               );
               return;
@@ -82,7 +83,8 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
               state = const AsyncData(null);
               showCustomDialogue(
                 child: AnalyzeDialogue(
-                  mood: data.mood!,
+                  mood: data,
+                  note: noteController,
                 ),
               );
               return;
@@ -91,5 +93,35 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
         },
       );
     }
+  }
+
+  Future<void> addMood({
+    required BuildContext context,
+    required TextEditingController noteController,
+    required MoodModel mood,
+  }) async {
+    state = const AsyncLoading();
+
+    final response = await ref.read(moodServiceProvider).addMood(
+          mood: mood,
+          note: noteController.text.trim(),
+        );
+
+    response.mapBoth(
+      onLeft: (l) {
+        logError(l.error.toString());
+        state = AsyncValue.error(l.error.toString(), StackTrace.current);
+        showToast(context, message: l.error.toString(), status: 'error');
+      },
+      onRight: (data) {
+        if (context.mounted) {
+          state = const AsyncData(null);
+          showToast(context,
+              message: 'Mood added successfully', status: 'success');
+          Navigator.of(context, rootNavigator: true).pop();
+          Navigator.of(context, rootNavigator: true).pop();
+        }
+      },
+    );
   }
 }

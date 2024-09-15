@@ -28,7 +28,7 @@ class MoodModel {
   String toRawJson() => json.encode(toJson());
 
   factory MoodModel.fromJson(Map<String, dynamic> json) => MoodModel(
-        mood: json["mood"],
+        mood: json["mood"] == 'joy' ? 'happy' : json["mood"],
         score: json["score"]?.toDouble(),
         emotions: json["emotions"] == null
             ? []
