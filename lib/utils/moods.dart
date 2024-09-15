@@ -1,5 +1,5 @@
 import 'package:aura/core/imports/core_imports.dart';
-import 'package:aura/models/mood_model.dart';
+import 'package:aura/models/local_mood_model.dart';
 
 final List<MoodModel> moods = [
   MoodModel(
