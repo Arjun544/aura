@@ -26,7 +26,7 @@ class AddMoodScreen extends HookConsumerWidget {
     final noteController = useTextEditingController();
     final selectedImage = useState<XFile?>(null);
     final recordedVoice = useState<String?>(null);
-    final selectedMood = useState<MoodModel?>(null);
+    final selectedMood = useState<LocalMoodModel?>(null);
 
     final isAnalyzing = ref.watch(addMoodProvider).isLoading;
 

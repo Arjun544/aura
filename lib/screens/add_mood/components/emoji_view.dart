@@ -6,7 +6,7 @@ import 'package:blobs/blobs.dart';
 import 'package:flutter_svg/svg.dart';
 
 class EmojiView extends StatelessWidget {
-  final ValueNotifier<MoodModel?> selectedMood;
+  final ValueNotifier<LocalMoodModel?> selectedMood;
 
   const EmojiView({super.key, required this.selectedMood});
 

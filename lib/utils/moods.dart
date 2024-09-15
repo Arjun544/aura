@@ -1,38 +1,38 @@
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/models/local_mood_model.dart';
 
-final List<MoodModel> moods = [
-  MoodModel(
+final List<LocalMoodModel> moods = [
+  LocalMoodModel(
     mood: 'Anger',
     emoji: AssetsManager.angryMood,
     color: Colors.red,
   ),
-  MoodModel(
+  LocalMoodModel(
     mood: 'Disgust',
     emoji: AssetsManager.disgustMood,
     color: Colors.purple,
   ),
-  MoodModel(
+  LocalMoodModel(
     mood: 'Fear',
     emoji: AssetsManager.fearMood,
     color: Colors.amber,
   ),
-  MoodModel(
+  LocalMoodModel(
     mood: 'Joy',
     emoji: AssetsManager.happyMood,
     color: AppColors.successColor,
   ),
-  MoodModel(
+  LocalMoodModel(
     mood: 'Neutral',
     emoji: AssetsManager.neutralMood,
     color: Colors.grey,
   ),
-  MoodModel(
+  LocalMoodModel(
     mood: 'Sadness',
     emoji: AssetsManager.sadMood,
     color: Colors.orange,
   ),
-  MoodModel(
+  LocalMoodModel(
     mood: 'Surprise',
     emoji: AssetsManager.surpriseMood,
     color: Colors.blue,

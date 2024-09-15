@@ -7,7 +7,7 @@ import 'package:blobs/blobs.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AnalyzeDialogue extends StatelessWidget {
-  final MoodModel mood;
+  final LocalMoodModel mood;
   const AnalyzeDialogue({super.key, required this.mood});
 
   @override

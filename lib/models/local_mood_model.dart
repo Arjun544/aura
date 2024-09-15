@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class MoodModel {
+class LocalMoodModel {
   final String mood;
   final String emoji;
   final Color color;
 
-  MoodModel({
+  LocalMoodModel({
     required this.mood,
     required this.emoji,
     required this.color,
