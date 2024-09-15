@@ -1,17 +1,20 @@
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
-import 'package:aura/models/local_mood_model.dart';
+import 'package:aura/utils/moods.dart';
 import 'package:aura/widgets/custom_button.dart';
 import 'package:aura/widgets/custom_text_button.dart';
 import 'package:blobs/blobs.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AnalyzeDialogue extends StatelessWidget {
-  final LocalMoodModel mood;
+  final String mood;
   const AnalyzeDialogue({super.key, required this.mood});
 
   @override
   Widget build(BuildContext context) {
+    final newMood = moods.firstWhere(
+        (element) => element.mood.toLowerCase() == mood.toLowerCase());
+
     return Material(
       color: Colors.transparent,
       child: Container(
@@ -39,11 +42,11 @@ class AnalyzeDialogue extends StatelessWidget {
               loop: true,
               duration: 1.seconds,
               styles: BlobStyles(
-                color: mood.color.withOpacity(0.3),
+                color: newMood.color.withOpacity(0.3),
               ),
               child: Center(
                 child: SvgPicture.asset(
-                  mood.emoji,
+                  newMood.emoji,
                   height: context.height * 0.15,
                   width: context.height * 0.15,
                 ),

@@ -33,7 +33,6 @@ dependencies:
   fl_chart: ^0.69.0
   image_picker: ^1.1.2
   permission_handler: ^11.3.1
-  audio_waveforms: ^1.0.5
   
 dev_dependencies:
   flutter_test:

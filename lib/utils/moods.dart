@@ -18,7 +18,7 @@ final List<LocalMoodModel> moods = [
     color: Colors.amber,
   ),
   LocalMoodModel(
-    mood: 'Joy',
+    mood: 'happy',
     emoji: AssetsManager.happyMood,
     color: AppColors.successColor,
   ),

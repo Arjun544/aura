@@ -60,7 +60,5 @@
 	<string>Aura want to access your camera</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Aura want to access your photos</string>
-	<key>NSMicrophoneUsageDescription</key>
-    <string>Aura want to access your microphone</string>
 </dict>
 </plist>

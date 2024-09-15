@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
-import 'package:aura/providers/common/supabase_provider.dart';
+import 'package:aura/screens/add_mood/add_mood_screen.dart';
+import 'package:aura/widgets/custom_sheet.dart';
 import 'package:aura/widgets/top_bar.dart';
 
 import 'components/happy_percentage_section.dart';
@@ -33,20 +32,7 @@ class HomeScreen extends ConsumerWidget {
           size: 28,
           color: AppColors.customBlack,
         ),
-        // onPressed: () => showCustomSheet(child: const AddMoodScreen()),
-        onPressed: () async {
-          try {
-            final res = await ref.read(supabaseProvider).functions.invoke(
-              'detect-mood-text',
-              body: {'text': 'I love this'},
-            );
-            final userMap = json.encode(res.data);
-
-            logInfo(userMap.toString());
-          } catch (e) {
-            logError(e.toString());
-          }
-        },
+        onPressed: () => showCustomSheet(child: const AddMoodScreen()),
       ),
     );
   }
