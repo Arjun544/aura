@@ -163,3 +163,6 @@ s3_secret_key = "env(S3_SECRET_KEY)"
 
 [functions.detect-mood-text]
 verify_jwt = false
+
+[functions.detect-mood-image]
+verify_jwt = false
