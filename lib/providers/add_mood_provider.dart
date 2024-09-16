@@ -49,6 +49,7 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
           if (data.mood != null) {
             if (context.mounted) {
               state = const AsyncData(null);
+              Navigator.of(context, rootNavigator: true).pop();
               showCustomDialogue(
                 child: AnalyzeDialogue(
                   mood: data,
@@ -81,6 +82,7 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
           if (data.mood != null) {
             if (context.mounted) {
               state = const AsyncData(null);
+              Navigator.of(context, rootNavigator: true).pop();
               showCustomDialogue(
                 child: AnalyzeDialogue(
                   mood: data,
@@ -92,6 +94,24 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
           }
         },
       );
+    }
+
+    if (type == 'emoji') {
+      if (context.mounted) {
+        state = const AsyncData(null);
+        Navigator.of(context, rootNavigator: true).pop();
+        showCustomDialogue(
+          child: AnalyzeDialogue(
+            mood: MoodModel(
+              mood: emoji.value.mood.toLowerCase(),
+              score: 100,
+              emotions: [],
+            ),
+            note: noteController,
+          ),
+        );
+        return;
+      }
     }
   }
 
@@ -118,7 +138,6 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
           state = const AsyncData(null);
           showToast(context,
               message: 'Mood added successfully', status: 'success');
-          Navigator.of(context, rootNavigator: true).pop();
           Navigator.of(context, rootNavigator: true).pop();
         }
       },
