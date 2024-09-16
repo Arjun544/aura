@@ -1,7 +1,7 @@
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
 import 'package:aura/models/mood_model.dart';
-import 'package:aura/providers/add_mood_provider.dart';
+import 'package:aura/providers/mood_providers/add_mood_provider.dart';
 import 'package:aura/utils/moods.dart';
 import 'package:aura/widgets/custom_button.dart';
 import 'package:aura/widgets/custom_text_button.dart';

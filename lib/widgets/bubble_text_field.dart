@@ -42,11 +42,13 @@ class SpeechBubbleTextField extends StatelessWidget {
             ),
           ),
           TextField(
+            controller: controller,
             onTapOutside: (event) => FocusScope.of(context).unfocus(),
             style: TextStyle(
               fontSize: 12.sp,
               fontWeight: FontWeight.w500,
             ),
+            textCapitalization: TextCapitalization.sentences,
             cursorColor: AppColors.customBlack,
             cursorWidth: 4,
             maxLines: 5,

@@ -11,6 +11,8 @@ import 'package:aura/services/mood_service.dart';
 import 'package:aura/widgets/custom_dialogue.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'mood_provider.dart';
+
 final addMoodProvider = AutoDisposeAsyncNotifierProvider<AddMoodNotifier, void>(
   () => AddMoodNotifier(),
 );
@@ -133,11 +135,19 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
         state = AsyncValue.error(l.error.toString(), StackTrace.current);
         showToast(context, message: l.error.toString(), status: 'error');
       },
-      onRight: (data) {
+      onRight: (_) {
         if (context.mounted) {
           state = const AsyncData(null);
-          showToast(context,
-              message: 'Mood added successfully', status: 'success');
+          showToast(
+            context,
+            message: 'Mood added successfully',
+            status: 'success',
+          );
+          ref.invalidate(
+            dayMoodProvider(
+              formatDate(DateTime.now(), [yyyy, '-', mm, '-', dd]),
+            ),
+          );
           Navigator.of(context, rootNavigator: true).pop();
         }
       },

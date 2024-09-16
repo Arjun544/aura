@@ -1,13 +1,14 @@
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
-import 'package:aura/utils/moods.dart';
+import 'package:aura/helpers/get_mood_icon.dart';
+import 'package:aura/providers/mood_providers/mood_provider.dart';
 import 'package:flutter_svg/svg.dart';
 
-class ThisWeekSection extends HookWidget {
+class ThisWeekSection extends HookConsumerWidget {
   const ThisWeekSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final ScrollController scrollController = useScrollController();
 
     final today = DateTime.now();
@@ -80,6 +81,12 @@ class ThisWeekSection extends HookWidget {
               final date = weekDates[index];
               final isToday = index == todayIndex;
 
+              final mood = ref.watch(
+                dayMoodProvider(
+                  formatDate(date, [yyyy, '-', mm, '-', dd]),
+                ),
+              );
+
               return Container(
                 width: 60.h,
                 margin: EdgeInsets.only(
@@ -115,10 +122,16 @@ class ThisWeekSection extends HookWidget {
                         ),
                       ],
                     ),
-                    SvgPicture.asset(
-                      moods[index].emoji,
-                      height: 20.h,
-                      width: 20.w,
+                    mood.when(
+                      data: (data) => data.mood != null
+                          ? SvgPicture.asset(
+                              getMoodIcon(data.mood!),
+                              height: 20.h,
+                              width: 20.w,
+                            )
+                          : const SizedBox.shrink(),
+                      error: (error, stackTrace) => const SizedBox(),
+                      loading: () => const SizedBox(),
                     ),
                   ],
                 ),

@@ -1,5 +1,5 @@
 import 'package:aura/models/local_mood_model.dart';
-import 'package:aura/providers/add_mood_provider.dart';
+import 'package:aura/providers/mood_providers/add_mood_provider.dart';
 import 'package:aura/utils/moods.dart';
 import 'package:aura/widgets/bubble_text_field.dart';
 import 'package:aura/widgets/close_button.dart';

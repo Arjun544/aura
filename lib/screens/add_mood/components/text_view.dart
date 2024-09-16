@@ -17,6 +17,7 @@ class TextView extends StatelessWidget {
           maxLines: 5,
           onTapOutside: (event) => FocusScope.of(context).unfocus(),
           onTap: () => FocusScope.of(context).unfocus(),
+          textCapitalization: TextCapitalization.sentences,
           style: TextStyle(
             fontSize: 12.sp,
             fontWeight: FontWeight.w500,

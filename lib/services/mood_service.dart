@@ -54,43 +54,50 @@ class MoodService {
     }
   }
 
-  FutureEither<MoodModel> addMood({
+  FutureVoid addMood({
     required MoodModel mood,
     required String note,
   }) async {
-    logError(
-      [
-        ...mood.emotions!.map((e) => {
-              e.toJson(),
-            })
-      ].toString(),
-    );
     try {
-      final newMood = await _client
-          .from('moods')
-          .insert({
-            'user_id': _client.auth.currentUser!.id,
-            'mood': mood.mood,
-            'score': mood.score,
-            'note': note,
-            'created_at': DateTime.now().toUtc().toLocal().toString(),
-            'mood_data': [
-              ...mood.emotions!.map((e) => {
-                    'label': e.label,
-                    'score': e.score,
-                  })
-            ],
-          })
-          .select('*')
-          .single()
-          .withConverter(
-            (value) => MoodModel.fromJson(value),
-          );
+      await _client.from('moods').insert({
+        'user_id': _client.auth.currentUser!.id,
+        'mood': mood.mood,
+        'score': mood.score,
+        'note': note,
+        'created_at': DateTime.now().toUtc().toLocal().toString(),
+        'mood_data': [
+          ...mood.emotions!.map((e) => {
+                'label': e.label,
+                'score': e.score,
+              })
+        ],
+      });
 
-      return Right(newMood);
+      return const Right(null);
     } catch (e) {
       logError(e.toString());
       return const Left(Failure('Failed to add mood'));
+    }
+  }
+
+  Future<MoodModel> getMoodByDate({
+    required String date,
+  }) async {
+    try {
+      final newMood = await _client
+          .from('moods')
+          .select('*')
+          .gte('created_at', date)
+          .order('created_at')
+          .limit(1)
+          .withConverter(
+            (value) => MoodModel.fromJson(value.isEmpty ? {} : value.first),
+          );
+
+      return newMood;
+    } catch (e) {
+      logError(e.toString());
+      throw const Failure('Failed to get mood');
     }
   }
 }
