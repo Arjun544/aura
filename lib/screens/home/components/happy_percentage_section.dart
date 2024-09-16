@@ -8,11 +8,11 @@ class HappyPercentageSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final happyPercentage = ref.watch(happyPercentageProvider);
+    final happyPercentages = ref.watch(happyPercentageProvider);
 
     return Container(
       height: context.height * 0.25,
-      margin: EdgeInsets.fromLTRB(15.w, 40.h, 15.w, 0.h),
+      margin: EdgeInsets.fromLTRB(15.w, 40.h, 15.w, 40.h),
       child: Column(
         children: [
           ListTile(
@@ -35,7 +35,7 @@ class HappyPercentageSection extends ConsumerWidget {
               ),
             ),
             trailing: Text(
-              '${happyPercentage.valueOrNull?.toStringAsFixed(0) ?? '0'}%',
+              '${happyPercentages.valueOrNull?.first.toStringAsFixed(0) ?? '0'}%',
               style: TextStyle(
                 fontSize: 14.sp,
               ),
@@ -57,14 +57,25 @@ class HappyPercentageSection extends ConsumerWidget {
                 ),
                 lineBarsData: [
                   LineChartBarData(
-                    spots: const [
-                      FlSpot(0, 0.2),
-                      FlSpot(1, 0.8),
-                      FlSpot(2, 0.6),
-                      FlSpot(3, 0.9),
-                      FlSpot(4, 0.7),
-                      FlSpot(5, 0.1),
-                    ],
+                    spots: happyPercentages.valueOrNull == null
+                        ? [
+                            const FlSpot(0, 0.2),
+                            const FlSpot(1, 0.8),
+                            const FlSpot(2, 0.6),
+                            const FlSpot(3, 0.9),
+                            const FlSpot(4, 0.7),
+                            const FlSpot(5, 0.1),
+                          ]
+                        : happyPercentages.valueOrNull!
+                            .map(
+                              (e) => FlSpot(
+                                happyPercentages.valueOrNull!
+                                    .indexOf(e)
+                                    .toDouble(),
+                                e,
+                              ),
+                            )
+                            .toList(),
                     isCurved: true,
                     color: AppColors.successColor,
                     barWidth: 4,

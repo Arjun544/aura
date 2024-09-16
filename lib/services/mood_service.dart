@@ -101,29 +101,28 @@ class MoodService {
     }
   }
 
-  Future<double> getHappyPercentage() async {
+  /// Retrieves a list of happy percentages for the current user over the last 7 days.
+  Future<List<double>> getHappyPercentages() async {
     try {
-      final totalMoods = await _client
-          .from('moods')
-          .select('mood')
+      final List<double> percentages = await _client
+          .from('percentages')
+          .select('happy_percentage')
           .eq('user_id', _client.auth.currentUser!.id)
-          .neq('mood', 'happy')
-          .count();
-      final happyMoods = await _client
-          .from('moods')
-          .select('mood')
-          .eq('user_id', _client.auth.currentUser!.id)
-          .eq('mood', 'happy')
-          .count();
+          .gte(
+            'created_at',
+            formatDate(DateTime.now().subtract(const Duration(days: 7)),
+                [yyyy, '-', mm, '-', dd]),
+          )
+          .order('created_at')
+          .withConverter(
+            (value) => value
+                .map(
+                  (e) => (e['happy_percentage'] as num).toDouble(),
+                )
+                .toList(),
+          );
 
-      final totalCount = totalMoods.count;
-      final happyCount = happyMoods.count;
-
-      if (totalCount == 0) {
-        return 0;
-      }
-
-      return (happyCount / totalCount) * 100;
+      return percentages;
     } catch (e) {
       logError(e.toString());
       throw const Failure('Failed to get happy percentage');
