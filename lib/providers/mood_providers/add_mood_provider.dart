@@ -11,7 +11,7 @@ import 'package:aura/services/mood_service.dart';
 import 'package:aura/widgets/custom_dialogue.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'mood_provider.dart';
+import 'moods_provider.dart';
 
 final addMoodProvider = AutoDisposeAsyncNotifierProvider<AddMoodNotifier, void>(
   () => AddMoodNotifier(),
@@ -148,6 +148,7 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
               formatDate(DateTime.now(), [yyyy, '-', mm, '-', dd]),
             ),
           );
+          ref.invalidate(happyPercentageProvider);
           Navigator.of(context, rootNavigator: true).pop();
         }
       },

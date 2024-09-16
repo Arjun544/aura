@@ -86,7 +86,7 @@ class MoodService {
     try {
       final newMood = await _client
           .from('moods')
-          .select('*')
+          .select('mood, created_at')
           .gte('created_at', date)
           .order('created_at')
           .limit(1)
@@ -98,6 +98,35 @@ class MoodService {
     } catch (e) {
       logError(e.toString());
       throw const Failure('Failed to get mood');
+    }
+  }
+
+  Future<double> getHappyPercentage() async {
+    try {
+      final totalMoods = await _client
+          .from('moods')
+          .select('mood')
+          .eq('user_id', _client.auth.currentUser!.id)
+          .neq('mood', 'happy')
+          .count();
+      final happyMoods = await _client
+          .from('moods')
+          .select('mood')
+          .eq('user_id', _client.auth.currentUser!.id)
+          .eq('mood', 'happy')
+          .count();
+
+      final totalCount = totalMoods.count;
+      final happyCount = happyMoods.count;
+
+      if (totalCount == 0) {
+        return 0;
+      }
+
+      return (happyCount / totalCount) * 100;
+    } catch (e) {
+      logError(e.toString());
+      throw const Failure('Failed to get happy percentage');
     }
   }
 }

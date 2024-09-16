@@ -1,7 +1,7 @@
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
 import 'package:aura/helpers/get_mood_icon.dart';
-import 'package:aura/providers/mood_providers/mood_provider.dart';
+import 'package:aura/providers/mood_providers/moods_provider.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ThisWeekSection extends HookConsumerWidget {

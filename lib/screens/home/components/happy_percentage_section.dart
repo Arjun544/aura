@@ -1,12 +1,15 @@
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
+import 'package:aura/providers/mood_providers/moods_provider.dart';
 import 'package:flutter_svg/svg.dart';
 
-class HappyPercentageSection extends StatelessWidget {
+class HappyPercentageSection extends ConsumerWidget {
   const HappyPercentageSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final happyPercentage = ref.watch(happyPercentageProvider);
+
     return Container(
       height: context.height * 0.25,
       margin: EdgeInsets.fromLTRB(15.w, 40.h, 15.w, 0.h),
@@ -32,11 +35,11 @@ class HappyPercentageSection extends StatelessWidget {
               ),
             ),
             trailing: Text(
-              '85%',
+              '${happyPercentage.valueOrNull?.toStringAsFixed(0) ?? '0'}%',
               style: TextStyle(
                 fontSize: 14.sp,
               ),
-            ),
+            ).animate().fadeIn(duration: 500.ms),
           ),
           SizedBox(height: 20.h),
           Expanded(
