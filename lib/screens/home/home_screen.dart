@@ -1,5 +1,8 @@
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
+import 'package:aura/providers/mood_providers/moods_provider.dart';
+import 'package:aura/providers/streak_providers.dart';
+import 'package:aura/providers/user_providers/user_provider.dart';
 import 'package:aura/screens/add_mood/add_mood_screen.dart';
 import 'package:aura/widgets/custom_sheet.dart';
 import 'package:aura/widgets/top_bar.dart';
@@ -15,14 +18,24 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: const TopBar(),
-      body: ListView(
-        padding: EdgeInsets.zero,
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        children: const [
-          ThisWeekSection(),
-          HappyPercentageSection(),
-          RecommendedActivitiesSection(),
-        ],
+      body: RefreshIndicator(
+        onRefresh: () async {
+          ref.invalidate(happyPercentageProvider);
+          ref.invalidate(dayMoodProvider);
+          ref.invalidate(userProvider);
+          ref.invalidate(streakCountProvider);
+        },
+        color: AppColors.primary,
+        backgroundColor: Colors.white,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          children: const [
+            ThisWeekSection(),
+            HappyPercentageSection(),
+            RecommendedActivitiesSection(),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 0,

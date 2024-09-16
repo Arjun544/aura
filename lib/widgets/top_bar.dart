@@ -93,34 +93,38 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
               );
             },
           ),
-          Container(
-            height: 45.sp,
-            width: 55.sp,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              border: Border.all(
-                color: AppColors.customGrey,
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  FlutterRemix.fire_fill,
-                  size: 22.sp,
-                  color: Colors.orangeAccent,
+          GestureDetector(
+            onTap: () => context.go(Routes.streaks),
+            child: Container(
+              height: 45.sp,
+              width: 55.sp,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(
+                  color: AppColors.customGrey,
                 ),
-                SizedBox(width: 4.w),
-                Text(
-                  ref.watch(streakCountProvider).valueOrNull?.toString() ?? '0',
-                  style: TextStyle(
-                    color: AppColors.customBlack,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    FlutterRemix.fire_fill,
+                    size: 22.sp,
+                    color: Colors.orangeAccent,
                   ),
-                ).animate().fadeIn(duration: 500.ms),
-              ],
+                  SizedBox(width: 4.w),
+                  Text(
+                    ref.watch(streakCountProvider).valueOrNull?.toString() ??
+                        '0',
+                    style: TextStyle(
+                      color: AppColors.customBlack,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ).animate().fadeIn(duration: 500.ms),
+                ],
+              ),
             ),
           ),
         ],
