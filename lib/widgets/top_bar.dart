@@ -94,7 +94,7 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
             },
           ),
           GestureDetector(
-            onTap: () => context.go(Routes.streaks),
+            onTap: () => context.go(Routes.streak),
             child: Container(
               height: 45.sp,
               width: 55.sp,

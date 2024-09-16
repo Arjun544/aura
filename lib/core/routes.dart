@@ -5,7 +5,7 @@ import 'package:aura/screens/auth_screen.dart';
 import 'package:aura/screens/bottom_nav_screen.dart';
 import 'package:aura/screens/home/home_screen.dart';
 import 'package:aura/screens/splash_screen.dart';
-import 'package:aura/screens/streaks/streaks_screen.dart';
+import 'package:aura/screens/streak/streak_screen.dart';
 import 'package:aura/utils/routing_keys.dart';
 import 'package:aura/utils/routing_paths.dart';
 
@@ -65,11 +65,11 @@ final routes = GoRouter(
           ],
         ),
         StatefulShellBranch(
-          navigatorKey: shellNavigatorStreaks,
+          navigatorKey: shellNavigatorStreak,
           routes: [
             GoRoute(
-              path: Routes.streaks,
-              builder: (context, state) => StreaksScreen(
+              path: Routes.streak,
+              builder: (context, state) => StreakScreen(
                 key: state.pageKey,
               ),
             ),

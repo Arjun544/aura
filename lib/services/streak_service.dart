@@ -1,3 +1,4 @@
+import 'package:aura/models/streak_model.dart';
 import 'package:fpdart/fpdart.dart';
 
 import '../core/imports/core_imports.dart';
@@ -17,7 +18,7 @@ class StreakService {
     required SupabaseClient client,
   }) : _client = client;
 
-  Future<int> getUserStreak() async {
+  Future<int> getStreakCount() async {
     try {
       final int streak = await _client
           .from('streaks')
@@ -26,6 +27,24 @@ class StreakService {
           .limit(1)
           .withConverter(
             (value) => value.isEmpty ? 0 : value[0]['streak_count'] as int,
+          );
+
+      return streak;
+    } catch (e) {
+      logError(e.toString());
+      throw const Left(Failure('Failed to get streak'));
+    }
+  }
+
+  Future<StreakModel> getStreak() async {
+    try {
+      final streak = await _client
+          .from('streaks')
+          .select('*')
+          .eq('user_id', _client.auth.currentUser!.id)
+          .limit(1)
+          .withConverter<StreakModel>(
+            (value) => StreakModel.fromJson(value[0]),
           );
 
       return streak;
