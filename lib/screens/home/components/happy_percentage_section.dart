@@ -87,9 +87,9 @@ class HappyPercentageSection extends ConsumerWidget {
                         Colors.white
                       ],
                       stops: [
-                        0.05,
+                        0.01,
                         0.5,
-                        0.9,
+                        1,
                       ],
                     ),
                     dotData: const FlDotData(show: true),

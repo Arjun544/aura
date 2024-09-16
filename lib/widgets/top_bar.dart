@@ -113,7 +113,7 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
                 ),
                 SizedBox(width: 4.w),
                 Text(
-                  ref.watch(streakProvider).valueOrNull?.toString() ?? '0',
+                  ref.watch(streakCountProvider).valueOrNull?.toString() ?? '0',
                   style: TextStyle(
                     color: AppColors.customBlack,
                     fontSize: 14.sp,

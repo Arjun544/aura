@@ -9,10 +9,10 @@ class StreaksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const TopBar(),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primary,
-        child: const Icon(FlutterRemix.add_line),
-        onPressed: () {},
+      body: Column(
+        children: [
+          
+        ],
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:aura/core/imports/packages_imports.dart';
 import 'package:aura/helpers/show_toast.dart';
 import 'package:aura/models/local_mood_model.dart';
 import 'package:aura/models/mood_model.dart';
+import 'package:aura/providers/streak_providers.dart';
 import 'package:aura/screens/add_mood/components/analyze_dialogue.dart';
 import 'package:aura/services/mood_service.dart';
 import 'package:aura/widgets/custom_dialogue.dart';
@@ -138,17 +139,18 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
       onRight: (_) {
         if (context.mounted) {
           state = const AsyncData(null);
-          showToast(
-            context,
-            message: 'Mood added successfully',
-            status: 'success',
-          );
+          // showToast(
+          //   context,
+          //   message: 'Mood added successfully',
+          //   status: 'success',
+          // );
           ref.invalidate(
             dayMoodProvider(
               formatDate(DateTime.now(), [yyyy, '-', mm, '-', dd]),
             ),
           );
           ref.invalidate(happyPercentageProvider);
+          ref.invalidate(streakCountProvider);
           Navigator.of(context, rootNavigator: true).pop();
         }
       },

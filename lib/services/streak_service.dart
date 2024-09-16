@@ -23,9 +23,9 @@ class StreakService {
           .from('streaks')
           .select('streak_count')
           .eq('user_id', _client.auth.currentUser!.id)
-          .single()
+          .limit(1)
           .withConverter(
-            (value) => value['streak_count'] as int,
+            (value) => value.isEmpty ? 0 : value[0]['streak_count'] as int,
           );
 
       return streak;
