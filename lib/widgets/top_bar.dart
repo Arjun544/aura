@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:aura/helpers/ask_permission.dart';
 import 'package:aura/helpers/show_toast.dart';
+import 'package:aura/providers/streak_providers.dart';
 import 'package:aura/providers/user_providers/user_provider.dart';
 import 'package:aura/services/user_services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -112,13 +113,13 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
                 ),
                 SizedBox(width: 4.w),
                 Text(
-                  '3',
+                  ref.watch(streakProvider).valueOrNull?.toString() ?? '0',
                   style: TextStyle(
                     color: AppColors.customBlack,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w600,
                   ),
-                ),
+                ).animate().fadeIn(duration: 500.ms),
               ],
             ),
           ),
