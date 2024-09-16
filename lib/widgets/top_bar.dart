@@ -1,6 +1,11 @@
 import 'dart:io';
 
+import 'package:aura/helpers/ask_permission.dart';
+import 'package:aura/helpers/show_toast.dart';
 import 'package:aura/providers/user_providers/user_provider.dart';
+import 'package:aura/services/user_services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../core/imports/core_imports.dart';
 import '../core/imports/packages_imports.dart';
@@ -15,6 +20,33 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    void selectImage() async {
+      final hasPermission =
+          await askPermission(name: 'Photos', permission: Permission.photos);
+      if (hasPermission) {
+        final image = await ImagePicker().pickImage(
+          source: ImageSource.gallery,
+          imageQuality: 50,
+        );
+        if (image != null) {
+          final res = await ref.read(userServiceProvider).updateImage(
+                file: File(image.path),
+              );
+
+          res.mapBoth(
+            onLeft: (l) {
+              logError(l.toString());
+              showToast(context,
+                  message: 'Failed to upload image', status: 'error');
+            },
+            onRight: (data) {
+              ref.invalidate(userProvider);
+            },
+          );
+        }
+      }
+    }
+
     return Container(
       height: kToolbarHeight,
       width: context.width,
@@ -34,7 +66,7 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
                   'https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1726012800&semt=ais_hybrid';
 
               return InkWell(
-                onTap: () => context.push(Routes.profile),
+                onTap: () => selectImage(),
                 child: Container(
                   height: 45.sp,
                   width: 45.sp,
