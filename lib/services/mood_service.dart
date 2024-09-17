@@ -148,4 +148,26 @@ class MoodService {
       rethrow;
     }
   }
+
+  Future<List<MoodModel>> getMoodsByDate({
+    required String date,
+    required RangeSize range,
+  }) async {
+    try {
+      final moods = await _client
+          .from('moods')
+          .select('*')
+          .eq('user_id', _client.auth.currentUser!.id)
+          .eq("created_at", date)
+          .order('created_at')
+          .range(range.from, range.to)
+          .withConverter(
+            (data) => data.map((e) => MoodModel.fromJson(e)).toList(),
+          );
+
+      return moods;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

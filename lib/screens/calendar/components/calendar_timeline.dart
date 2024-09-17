@@ -1,13 +1,14 @@
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
+import 'package:aura/providers/calendar_providers/calendar_provider.dart';
 
-class CalendarTimeline extends HookWidget {
+class CalendarTimeline extends HookConsumerWidget {
   final ValueNotifier<DateTime> selectedDate;
 
   const CalendarTimeline({super.key, required this.selectedDate});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     DateTime now = DateTime.now();
 
     final List<DateTime> dates = useMemoized(() {
@@ -29,8 +30,17 @@ class CalendarTimeline extends HookWidget {
           date.year == now.year,
     );
 
+    void onTap(DateTime newDate) async {
+      selectedDate.value = newDate;
+
+      final formattedDate = formatDate(newDate, [yyyy, '-', mm, '-', dd]);
+      // Reload the moods as the selected date has changed
+      await ref.read(moodsDateProvider(formattedDate).notifier).load(0, 15, '');
+      ref.invalidate(moodsDateProvider(formattedDate));
+    }
+
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 20.h),
+      padding: EdgeInsets.only(top: 20.h),
       child: Column(
         children: [
           Padding(
@@ -63,7 +73,7 @@ class CalendarTimeline extends HookWidget {
                 final isToday = index == todayIndex;
 
                 return GestureDetector(
-                  onTap: () => selectedDate.value = date,
+                  onTap: () => onTap(date),
                   child: AnimatedContainer(
                     width: 50.h,
                     duration: 500.ms,

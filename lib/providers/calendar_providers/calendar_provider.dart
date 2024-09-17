@@ -19,6 +19,14 @@ final moodsListProvider =
   },
 );
 
+final moodsDateProvider = StateNotifierProvider.family<MoodsDayNotifier,
+    PagedState<int, MoodModel>, String>(
+  (ref, date) {
+    ref.watch(userProvider.select((e) => e?.id));
+    return MoodsDayNotifier(ref, date);
+  },
+);
+
 class MoodsListNotifier extends PagedNotifier<int, MoodModel> {
   final StateNotifierProviderRef ref;
   MoodsListNotifier(
@@ -34,4 +42,20 @@ class MoodsListNotifier extends PagedNotifier<int, MoodModel> {
     state = state.copyWith(
         records: [...state.records!.map((e) => e.id == mood.id ? mood : e)]);
   }
+}
+
+class MoodsDayNotifier extends PagedNotifier<int, MoodModel> {
+  final StateNotifierProviderRef ref;
+  final String date;
+  MoodsDayNotifier(
+    this.ref,
+    this.date,
+  ) : super(
+          load: (page, limit, search) =>
+              ref.read(moodServiceProvider).getMoodsByDate(
+                    date: date,
+                    range: getPagination(page: page, limit: limit),
+                  ),
+          nextPageKeyBuilder: NextPageKeyBuilderDefault.mysqlPagination,
+        );
 }
