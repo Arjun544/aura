@@ -5,6 +5,7 @@ import 'package:aura/models/mood_model.dart';
 import 'package:aura/utils/moods.dart';
 import 'package:aura/widgets/linear_percent_indicator.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class MoodTile extends StatelessWidget {
   final MoodModel mood;
@@ -57,12 +58,11 @@ class MoodTile extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          mood.createdAt!.toString(),
-                          // '${timeago.format(
-                          //   mood.createdAt!,
-                          //   locale: 'en_short',
-                          //   allowFromNow: true,
-                          // )} ago',
+                          '${timeago.format(
+                            mood.createdAt!,
+                            locale: 'en_short',
+                            allowFromNow: true,
+                          )} ago',
                           style: TextStyle(
                             fontSize: 10.sp,
                             fontWeight: FontWeight.w500,
