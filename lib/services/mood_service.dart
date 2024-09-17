@@ -140,6 +140,7 @@ class MoodService {
           .from('moods')
           .select('*')
           .eq('user_id', _client.auth.currentUser!.id)
+          .order('created_at')
           .range(range.from, range.to)
           .withConverter(
             (data) => data.map((e) => MoodModel.fromJson(e)).toList(),
