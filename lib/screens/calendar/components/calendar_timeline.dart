@@ -1,6 +1,6 @@
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
-import 'package:aura/providers/calendar_providers/calendar_provider.dart';
+import 'package:aura/providers/calendar_providers.dart';
 
 class CalendarTimeline extends HookConsumerWidget {
   final ValueNotifier<DateTime> selectedDate;

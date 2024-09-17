@@ -88,9 +88,9 @@ class ThisWeekSection extends HookConsumerWidget {
               );
 
               return Container(
-                width: 60.h,
+                width: 55.h,
                 margin: EdgeInsets.only(
-                    right: index == weekDates.length - 1 ? 0 : 14.w),
+                    right: index == weekDates.length - 1 ? 0 : 12.w),
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 decoration: BoxDecoration(
                   color: isToday ? AppColors.primary : AppColors.customGrey,

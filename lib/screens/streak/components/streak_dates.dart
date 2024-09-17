@@ -26,10 +26,10 @@ class StreakDates extends HookWidget {
           // Generate a list of next 10 new dates as placeholders
           final newDates = List.generate(
             10,
-            (i) => lastDate.add(Duration(days: i + 1)),
+            (i) => lastDate.add(Duration(days: i)),
           );
 
-          final allDates = [...streakDates, ...newDates];
+          final allDates = [...streakDates, ...newDates].toSet().toList();
           final date = allDates[index];
           final int todayIndex = allDates.indexWhere(
             (date) =>
@@ -72,7 +72,7 @@ class StreakDates extends HookWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                date.difference(today).inDays < 0
+                date.difference(today.add(const Duration(days: 1))).inDays < 0
                     ? Icon(
                         IconsaxBold.tick_circle,
                         size: 20.sp,

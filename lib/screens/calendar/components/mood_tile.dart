@@ -53,16 +53,15 @@ class MoodTile extends StatelessWidget {
                         Text(
                           mood.mood!.capitalizeFirst!,
                           style: TextStyle(
-                            fontSize: 13.sp,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         Text(
-                          '${timeago.format(
+                          timeago.format(
                             mood.createdAt!,
-                            locale: 'en_short',
                             allowFromNow: true,
-                          )} ago',
+                          ),
                           style: TextStyle(
                             fontSize: 10.sp,
                             fontWeight: FontWeight.w500,

@@ -35,7 +35,9 @@ class HappyPercentageSection extends ConsumerWidget {
               ),
             ),
             trailing: Text(
-              '${happyPercentages.valueOrNull?.first.toStringAsFixed(0) ?? '0'}%',
+              happyPercentages.valueOrNull == null
+                  ? '0%'
+                  : '${happyPercentages.valueOrNull!.first.toStringAsFixed(0)}%',
               style: TextStyle(
                 fontSize: 14.sp,
               ),

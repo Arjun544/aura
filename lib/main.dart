@@ -1,5 +1,7 @@
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
+import 'package:aura/core/time_ago_messages.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import 'core/routes.dart';
 import 'providers/common/supabase_provider.dart';
@@ -20,7 +22,9 @@ void main() async {
 
   await dotenv.load();
   await supabaseInit();
+  timeago.setLocaleMessages('en', TimeAgoMessages());
   await Future.delayed(const Duration(seconds: 2));
+
 
   runApp(
     UncontrolledProviderScope(

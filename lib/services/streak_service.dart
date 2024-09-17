@@ -44,7 +44,11 @@ class StreakService {
           .eq('user_id', _client.auth.currentUser!.id)
           .limit(1)
           .withConverter<StreakModel>(
-            (value) => StreakModel.fromJson(value[0]),
+            (value) => value.isEmpty ? StreakModel(
+              streakCount: 0,
+              longestStreak: 0,
+              
+            ) : StreakModel.fromJson(value[0]),
           );
 
       return streak;

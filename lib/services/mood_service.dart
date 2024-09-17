@@ -65,7 +65,7 @@ class MoodService {
         'mood': mood.mood,
         'score': mood.score,
         'note': note,
-        'created_at': DateTime.now().toUtc().toLocal().toString(),
+        'date': formatDate(DateTime.now(), [yyyy, '-', mm, '-', dd]),
         'mood_data': [
           ...mood.emotions!.map((e) => {
                 'label': e.label,
@@ -88,7 +88,7 @@ class MoodService {
       final newMood = await _client
           .from('moods')
           .select('mood, created_at')
-          .gte('created_at', date)
+          .eq('date', date)
           .order('created_at')
           .limit(1)
           .withConverter(
@@ -116,11 +116,13 @@ class MoodService {
           )
           .order('created_at')
           .withConverter(
-            (value) => value
-                .map(
-                  (e) => (e['happy_percentage'] as num).toDouble(),
-                )
-                .toList(),
+            (value) => value.isEmpty
+                ? List.generate(7, (int index) => 0.0).toList()
+                : value
+                    .map(
+                      (e) => (e['happy_percentage'] as num).toDouble(),
+                    )
+                    .toList(),
           );
 
       return percentages;
@@ -158,7 +160,7 @@ class MoodService {
           .from('moods')
           .select('*')
           .eq('user_id', _client.auth.currentUser!.id)
-          .eq("created_at", date)
+          .eq("date", date)
           .order('created_at')
           .range(range.from, range.to)
           .withConverter(

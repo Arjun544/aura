@@ -1,7 +1,7 @@
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
 import 'package:aura/models/mood_model.dart';
-import 'package:aura/providers/calendar_providers/calendar_provider.dart';
+import 'package:aura/providers/calendar_providers.dart';
 import 'package:aura/widgets/custom_text_button.dart';
 import 'package:aura/widgets/riverpod_infinite_scroll/src/river_paged_builder.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';

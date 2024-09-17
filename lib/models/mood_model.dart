@@ -6,6 +6,7 @@ class MoodModel {
   final String? note;
   final double? score;
   final List<Emotion>? emotions;
+  final DateTime? date;
   final DateTime? createdAt;
 
   MoodModel({
@@ -14,6 +15,7 @@ class MoodModel {
     this.note,
     this.score,
     this.emotions,
+    this.date,
     this.createdAt,
   });
 
@@ -23,6 +25,7 @@ class MoodModel {
     String? note,
     double? score,
     List<Emotion>? emotions,
+    DateTime? date,
     DateTime? createdAt,
   }) =>
       MoodModel(
@@ -31,6 +34,7 @@ class MoodModel {
         note: note ?? this.note,
         score: score ?? this.score,
         emotions: emotions ?? this.emotions,
+        date: date ?? this.date,
         createdAt: createdAt ?? this.createdAt,
       );
 
@@ -49,6 +53,9 @@ class MoodModel {
             : List<Emotion>.from(
                 json["mood_data"]!.map((x) => Emotion.fromJson(x)),
               ),
+        date: json["date"] == null
+            ? null
+            : DateTime.parse(json["date"]),
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
@@ -58,6 +65,7 @@ class MoodModel {
         "mood": mood,
         "note": note,
         "score": score,
+        "date": date,
         "mood_data": emotions == null
             ? []
             : List<dynamic>.from(
