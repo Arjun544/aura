@@ -1,3 +1,4 @@
+import 'package:aura/helpers/get_pagination.dart';
 import 'package:aura/models/mood_model.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -126,6 +127,25 @@ class MoodService {
     } catch (e) {
       logError(e.toString());
       throw const Failure('Failed to get happy percentage');
+    }
+  }
+
+  Future<List<MoodModel>> getMoods({
+    required RangeSize range,
+  }) async {
+    try {
+      final moods = await _client
+          .from('moods')
+          .select('*')
+          .eq('user_id', _client.auth.currentUser!.id)
+          .range(range.from, range.to)
+          .withConverter(
+            (data) => data.map((e) => MoodModel.fromJson(e)).toList(),
+          );
+
+      return moods;
+    } catch (e) {
+      rethrow;
     }
   }
 }

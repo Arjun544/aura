@@ -5,6 +5,7 @@ class Routes {
   // Bottom Navigation Routes
   static const String home = '/';
   static const String streak = '/streak';
+  static const String calendar = '/calendar';
 
   // Profile Routes
   static const String profile = '/profile';

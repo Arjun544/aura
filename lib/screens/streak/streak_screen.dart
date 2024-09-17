@@ -56,7 +56,7 @@ class StreakScreen extends ConsumerWidget {
                     Positioned(
                       bottom: -30,
                       child: Text(
-                        '1',
+                        data.streakCount.toString(),
                         style: TextStyle(
                           fontSize: 40.sp,
                           fontWeight: FontWeight.bold,

@@ -36,7 +36,7 @@ class BottomNavScreen extends StatelessWidget {
           ),
           NavItem(
             icon: IconsaxBold.calendar_2,
-            title: 'Events',
+            title: 'Calendar',
           ),
           NavItem(
             icon: IconsaxBold.chart_2,

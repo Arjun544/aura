@@ -4,8 +4,8 @@ final rootNavigatorKey = GlobalKey<NavigatorState>();
 final shellNavigatorHome = GlobalKey<NavigatorState>(debugLabel: 'shellHome');
 final shellNavigatorStreak =
     GlobalKey<NavigatorState>(debugLabel: 'shellStreak');
-final shellNavigatorEvents =
-    GlobalKey<NavigatorState>(debugLabel: 'shellEvents');
+final shellNavigatorCalendar =
+    GlobalKey<NavigatorState>(debugLabel: 'shellCalendars');
 final shellNavigatorConversations =
     GlobalKey<NavigatorState>(debugLabel: 'shellConversations');
 final shellNavigatorNotifications =
