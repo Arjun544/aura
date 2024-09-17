@@ -35,6 +35,7 @@ class CalendarTimeline extends HookConsumerWidget {
 
       final formattedDate = formatDate(newDate, [yyyy, '-', mm, '-', dd]);
       // Reload the moods as the selected date has changed
+      ref.invalidate(moodsDateProvider(formattedDate));
       await ref.read(moodsDateProvider(formattedDate).notifier).load(0, 15, '');
       ref.invalidate(moodsDateProvider(formattedDate));
     }

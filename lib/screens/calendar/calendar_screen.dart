@@ -9,7 +9,7 @@ import '../../widgets/top_bar.dart';
 import 'components/calendar_view.dart';
 import 'components/mood_list_view.dart';
 
-class CalendarScreen extends ConsumerWidget {
+class CalendarScreen extends HookConsumerWidget {
   const CalendarScreen({super.key});
 
   @override
@@ -23,7 +23,7 @@ class CalendarScreen extends ConsumerWidget {
             const TopBar(),
             Expanded(
               child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 400),
+                duration: 400.ms,
                 transitionBuilder: (child, animation) => FadeTransition(
                   opacity: animation,
                   child: child,
