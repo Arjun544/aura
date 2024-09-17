@@ -6,6 +6,7 @@ import 'package:aura/screens/bottom_nav_screen.dart';
 import 'package:aura/screens/calendar/calendar_screen.dart';
 import 'package:aura/screens/home/home_screen.dart';
 import 'package:aura/screens/splash_screen.dart';
+import 'package:aura/screens/stats/Stats_screen.dart';
 import 'package:aura/screens/streak/streak_screen.dart';
 import 'package:aura/utils/routing_keys.dart';
 import 'package:aura/utils/routing_paths.dart';
@@ -82,6 +83,17 @@ final routes = GoRouter(
             GoRoute(
               path: Routes.calendar,
               builder: (context, state) => CalendarScreen(
+                key: state.pageKey,
+              ),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          navigatorKey: shellNavigatorStats,
+          routes: [
+            GoRoute(
+              path: Routes.stats,
+              builder: (context, state) => StatsScreen(
                 key: state.pageKey,
               ),
             ),
