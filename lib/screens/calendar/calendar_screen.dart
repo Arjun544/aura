@@ -10,6 +10,7 @@ import '../../core/imports/core_imports.dart';
 import '../../core/imports/packages_imports.dart';
 import '../../providers/common/supabase_provider.dart';
 import '../../widgets/top_bar.dart';
+import 'components/calendar_view.dart';
 import 'components/mood_tile.dart';
 
 class CalendarScreen extends ConsumerWidget {
@@ -26,115 +27,108 @@ class CalendarScreen extends ConsumerWidget {
             const TopBar(),
             Expanded(
               child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 400),
-                  transitionBuilder: (child, animation) => FadeTransition(
-                        opacity: animation,
-                        child: child,
+                duration: const Duration(milliseconds: 400),
+                transitionBuilder: (child, animation) => FadeTransition(
+                  opacity: animation,
+                  child: child,
+                ),
+                child: layout == 'calendar'
+                    ? const CalendarView(
+                        key: ValueKey('calendar view'),
+                      )
+                    : RiverPagedBuilder<int, MoodModel>(
+                        firstPageKey: 0,
+                        limit: 15,
+                        provider: moodsListProvider,
+                        onRefresh: () async {
+                          // ignore: unused_result
+                          ref.refresh(moodsListProvider);
+                        },
+                        firstPageProgressIndicatorBuilder: (_, __) => Center(
+                          child: LoadingAnimationWidget.staggeredDotsWave(
+                            color: AppColors.primary,
+                            size: 30.sp,
+                          ),
+                        ),
+                        newPageProgressIndicatorBuilder: (_, __) => Center(
+                          child: LoadingAnimationWidget.staggeredDotsWave(
+                            color: AppColors.primary,
+                            size: 30.sp,
+                          ),
+                        ),
+                        firstPageErrorIndicatorBuilder: (_, controller) =>
+                            Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Failed to get moods',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.customBlack.withOpacity(0.5),
+                                ),
+                              ),
+                              CustomTextButton(
+                                text: 'Retry',
+                                size: 14.sp,
+                                onPressed: () =>
+                                    ref.invalidate(moodsListProvider),
+                                color: AppColors.errorColor,
+                              ),
+                            ],
+                          ),
+                        ),
+                        newPageErrorIndicatorBuilder: (_, controller) => Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Failed to get moods',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.customBlack.withOpacity(0.5),
+                                ),
+                              ),
+                              CustomTextButton(
+                                text: 'Retry',
+                                size: 14.sp,
+                                onPressed: () =>
+                                    ref.invalidate(moodsListProvider),
+                                color: AppColors.errorColor,
+                              ),
+                            ],
+                          ),
+                        ),
+                        noItemsFoundIndicatorBuilder: (_, __) => Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'No moods found',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.customBlack.withOpacity(0.5),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        itemBuilder: (context, item, index) => MoodTile(
+                          mood: item,
+                        ),
+                        pagedBuilder: (controller, builder) => PagedListView(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 15.w,
+                            vertical: 30.h,
+                          ),
+                          pagingController: controller,
+                          builderDelegate: builder,
+                        ),
                       ),
-                  child: layout == 'list'
-                      ? RiverPagedBuilder<int, MoodModel>(
-                          firstPageKey: 0,
-                          limit: 15,
-                          provider: moodsListProvider,
-                          onRefresh: () async {
-                            // ignore: unused_result
-                            ref.refresh(moodsListProvider);
-                          },
-                          firstPageProgressIndicatorBuilder: (_, __) => Center(
-                            child: LoadingAnimationWidget.staggeredDotsWave(
-                              color: AppColors.primary,
-                              size: 30.sp,
-                            ),
-                          ),
-                          newPageProgressIndicatorBuilder: (_, __) => Center(
-                            child: LoadingAnimationWidget.staggeredDotsWave(
-                              color: AppColors.primary,
-                              size: 30.sp,
-                            ),
-                          ),
-                          firstPageErrorIndicatorBuilder: (_, controller) =>
-                              Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Failed to get moods',
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color:
-                                        AppColors.customBlack.withOpacity(0.5),
-                                  ),
-                                ),
-                                CustomTextButton(
-                                  text: 'Retry',
-                                  size: 14.sp,
-                                  onPressed: () =>
-                                      ref.invalidate(moodsListProvider),
-                                  color: AppColors.errorColor,
-                                ),
-                              ],
-                            ),
-                          ),
-                          newPageErrorIndicatorBuilder: (_, controller) =>
-                              Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Failed to get moods',
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color:
-                                        AppColors.customBlack.withOpacity(0.5),
-                                  ),
-                                ),
-                                CustomTextButton(
-                                  text: 'Retry',
-                                  size: 14.sp,
-                                  onPressed: () =>
-                                      ref.invalidate(moodsListProvider),
-                                  color: AppColors.errorColor,
-                                ),
-                              ],
-                            ),
-                          ),
-                          noItemsFoundIndicatorBuilder: (_, __) => Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'No moods found',
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color:
-                                        AppColors.customBlack.withOpacity(0.5),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          itemBuilder: (context, item, index) => MoodTile(
-                            mood: item,
-                          ),
-                          pagedBuilder: (controller, builder) => PagedListView(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 15.w,
-                              vertical: 30.h,
-                            ),
-                            pagingController: controller,
-                            builderDelegate: builder,
-                          ),
-                        )
-                      : const FlutterLogo(
-                          key: ValueKey('calendar view'),
-                        )
-                  // : const CalendarView(
-                  //     key: ValueKey('calendar view'),
-                  //   ),
-                  ),
+              ),
             )
           ],
         ),
