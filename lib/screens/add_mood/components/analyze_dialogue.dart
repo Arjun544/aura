@@ -20,7 +20,7 @@ class AnalyzeDialogue extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     logSuccess(mood.mood.toString());
-    final newMood = moods.firstWhere(
+    final newMood = localMoods.firstWhere(
       (element) =>
           element.mood.toLowerCase() == mood.mood!.toLowerCase() ,
     );

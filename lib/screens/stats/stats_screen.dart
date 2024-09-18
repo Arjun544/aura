@@ -1,19 +1,22 @@
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
 import 'package:aura/helpers/get_mood_icon.dart';
-import 'package:aura/utils/moods.dart';
+import 'package:aura/models/mood_model.dart';
+import 'package:aura/providers/stats_provider.dart';
+import 'package:aura/widgets/custom_text_button.dart';
 import 'package:aura/widgets/top_bar.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'components/top_moods.dart';
 
-class StatsScreen extends HookWidget {
+class StatsScreen extends HookConsumerWidget {
   const StatsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final selectedTime = useState('Weekly');
+  Widget build(BuildContext context, WidgetRef ref) {
     final touchedIndex = useState(-1);
+
+    final stats = ref.watch(statsProvider);
 
     BarChartGroupData makeGroupData(
       int x,
@@ -45,174 +48,185 @@ class StatsScreen extends HookWidget {
       );
     }
 
-    List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
-          switch (i) {
-            case 0:
-              return makeGroupData(0, 5, isTouched: i == touchedIndex.value);
-            case 1:
-              return makeGroupData(1, 6.5, isTouched: i == touchedIndex.value);
-            case 2:
-              return makeGroupData(2, 5, isTouched: i == touchedIndex.value);
-            case 3:
-              return makeGroupData(3, 7.5, isTouched: i == touchedIndex.value);
-            case 4:
-              return makeGroupData(4, 9, isTouched: i == touchedIndex.value);
-            case 5:
-              return makeGroupData(5, 11.5, isTouched: i == touchedIndex.value);
-            case 6:
-              return makeGroupData(6, 6.5, isTouched: i == touchedIndex.value);
-            default:
-              return throw Error();
-          }
-        });
-
-    Widget getTitles(double value, TitleMeta meta) {
-      const style = TextStyle(
-        color: AppColors.customBlack,
-        fontWeight: FontWeight.bold,
-        fontSize: 14,
-      );
-      Widget text;
-      switch (value.toInt()) {
-        case 0:
-          text = const Text('10', style: style);
-          break;
-        case 1:
-          text = const Text('20', style: style);
-          break;
-        case 2:
-          text = const Text('30', style: style);
-          break;
-        case 3:
-          text = const Text('40', style: style);
-          break;
-        case 4:
-          text = const Text('50', style: style);
-          break;
-        case 5:
-          text = const Text('60', style: style);
-          break;
-        case 6:
-          text = const Text('70', style: style);
-          break;
-        default:
-          text = const Text('', style: style);
-          break;
-      }
-      return SideTitleWidget(
-        axisSide: meta.axisSide,
-        space: 16,
-        child: text,
-      );
-    }
+    List<BarChartGroupData> showingGroups(List<MoodModel> data) =>
+        List.generate(
+          7,
+          (i) => makeGroupData(i, data[i].score ?? 0,
+              isTouched: i == touchedIndex.value),
+        );
 
     return Scaffold(
       appBar: const TopBar(),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const TopMoods(),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.h),
-              child: Text(
-                'Your Statistics',
-                style: TextStyle(
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Expanded(
-              child: BarChart(
-                BarChartData(
-                  barTouchData: BarTouchData(
-                    enabled: true,
-                    touchTooltipData: BarTouchTooltipData(
-                      getTooltipColor: (_) => Colors.white,
-                      tooltipRoundedRadius: 14,
-                      tooltipHorizontalAlignment: FLHorizontalAlignment.right,
-                      tooltipMargin: -10,
-                      getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                        return BarTooltipItem(
-                          '${moods[group.x.toInt()].mood.capitalizeFirst}\n',
-                          TextStyle(
-                            color: AppColors.customBlack,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.sp,
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: (rod.toY - 1).toString(),
-                              style: TextStyle(
-                                color: AppColors.customBlack,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                    touchCallback: (FlTouchEvent event, barTouchResponse) {
-                      if (!event.isInterestedForInteractions ||
-                          barTouchResponse == null ||
-                          barTouchResponse.spot == null) {
-                        touchedIndex.value = -1;
-                        return;
-                      }
-                      touchedIndex.value =
-                          barTouchResponse.spot!.touchedBarGroupIndex;
-                      if (!event.isInterestedForInteractions ||
-                          barTouchResponse.spot == null) {
-                        touchedIndex.value = -1;
-                        return;
-                      }
-                      touchedIndex.value =
-                          barTouchResponse.spot!.touchedBarGroupIndex;
-                    },
-                  ),
-                  titlesData: FlTitlesData(
-                    show: true,
-                    rightTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    topTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        reservedSize: 38,
-                        getTitlesWidget: (double value, TitleMeta meta) =>
-                            Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: SvgPicture.asset(
-                            getMoodIcon(moods[value.toInt()].mood),
+      body: stats.when(
+        data: (data) => Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.w),
+          child: RefreshIndicator(
+            onRefresh: () async => ref.invalidate(statsProvider),
+            color: AppColors.primary,
+            backgroundColor: Colors.white,
+            child: CustomScrollView(
+              slivers: [
+                SliverFillRemaining(
+                  hasScrollBody: true,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TopMoods(
+                        topMoods: data,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20.h),
+                        child: Text(
+                          'Your Moods in %',
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
-                    ),
-                    bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        getTitlesWidget: getTitles,
-                        reservedSize: 38,
+                      Expanded(
+                        child: BarChart(
+                          BarChartData(
+                            barTouchData: BarTouchData(
+                              enabled: true,
+                              touchTooltipData: BarTouchTooltipData(
+                                getTooltipColor: (_) => AppColors.customGrey,
+                                tooltipRoundedRadius: 14,
+                                tooltipHorizontalAlignment:
+                                    FLHorizontalAlignment.right,
+                                tooltipMargin: -10,
+                                getTooltipItem:
+                                    (group, groupIndex, rod, rodIndex) {
+                                  return BarTooltipItem(
+                                    '${data[group.x.toInt()].mood!.capitalizeFirst}\n',
+                                    TextStyle(
+                                      color: AppColors.customBlack,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14.sp,
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text:
+                                            "${(rod.toY - 1).roundToDouble().toStringAsFixed(0)}%",
+                                        style: TextStyle(
+                                          color: AppColors.customBlack,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                              touchCallback:
+                                  (FlTouchEvent event, barTouchResponse) {
+                                if (!event.isInterestedForInteractions ||
+                                    barTouchResponse == null ||
+                                    barTouchResponse.spot == null) {
+                                  touchedIndex.value = -1;
+                                  return;
+                                }
+                                touchedIndex.value =
+                                    barTouchResponse.spot!.touchedBarGroupIndex;
+                                if (!event.isInterestedForInteractions ||
+                                    barTouchResponse.spot == null) {
+                                  touchedIndex.value = -1;
+                                  return;
+                                }
+                                touchedIndex.value =
+                                    barTouchResponse.spot!.touchedBarGroupIndex;
+                              },
+                            ),
+                            titlesData: FlTitlesData(
+                              show: true,
+                              rightTitles: const AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
+                              topTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  reservedSize: 38,
+                                  getTitlesWidget:
+                                      (double value, TitleMeta meta) => Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: SvgPicture.asset(
+                                      getMoodIcon(data[value.toInt()].mood!),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              bottomTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  getTitlesWidget: (value, meta) =>
+                                      SideTitleWidget(
+                                    axisSide: meta.axisSide,
+                                    space: 16,
+                                    child: Text(
+                                      data[value.toInt()]
+                                          .score!
+                                          .roundToDouble()
+                                          .toStringAsFixed(0)
+                                          .toString(),
+                                      style: TextStyle(
+                                        color: AppColors.customBlack,
+                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                  reservedSize: 38,
+                                ),
+                              ),
+                              leftTitles: const AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: false,
+                                ),
+                              ),
+                            ),
+                            borderData: FlBorderData(
+                              show: false,
+                            ),
+                            barGroups: showingGroups(
+                              data,
+                            ),
+                            gridData: const FlGridData(show: false),
+                          ),
+                        ),
                       ),
-                    ),
-                    leftTitles: const AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: false,
-                      ),
-                    ),
+                    ],
                   ),
-                  borderData: FlBorderData(
-                    show: false,
-                  ),
-                  barGroups: showingGroups(),
-                  gridData: const FlGridData(show: false),
+                ),
+              ],
+            ),
+          ),
+        ),
+        error: (error, stackTrace) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Failed to get stats',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.customBlack.withOpacity(0.5),
                 ),
               ),
-            ),
-          ],
+              CustomTextButton(
+                text: 'Retry',
+                size: 14.sp,
+                onPressed: () => ref.invalidate(statsProvider),
+                color: AppColors.errorColor,
+              ),
+            ],
+          ),
+        ),
+        loading: () => Center(
+          child: LoadingAnimationWidget.staggeredDotsWave(
+            color: AppColors.primary,
+            size: 30.sp,
+          ),
         ),
       ),
     );

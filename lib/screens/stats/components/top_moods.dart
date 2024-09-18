@@ -1,14 +1,45 @@
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/core/imports/packages_imports.dart';
 import 'package:aura/helpers/get_mood_icon.dart';
+import 'package:aura/models/mood_model.dart';
 import 'package:aura/utils/moods.dart';
 import 'package:flutter_svg/svg.dart';
 
-class TopMoods extends StatelessWidget {
-  const TopMoods({super.key});
+class TopMoods extends HookConsumerWidget {
+  final List<MoodModel> topMoods;
+  const TopMoods({super.key, required this.topMoods});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final assignRanks = useMemoized(() {
+      List<MoodModel> sortedList = topMoods.toList()
+        ..sort((a, b) => b.score!.compareTo(a.score!));
+
+      // Take the top 3 moods
+      List<MoodModel> top3Moods = sortedList.take(3).toList();
+
+      // Create a list to store top 3 moods with ranks
+      List<MoodModel> rankedTop3Moods = [];
+
+      // Assign ranks to the top 3 moods
+      for (int i = 0; i < top3Moods.length; i++) {
+        MoodModel moodWithRank = MoodModel(
+          mood: top3Moods[i].mood,
+          score: top3Moods[i].score,
+        );
+        rankedTop3Moods.add(moodWithRank);
+      }
+
+      return rankedTop3Moods;
+    }, const []);
+
+    // Custom arraged moods as per UI
+    final top3Moods = [
+      assignRanks[1],
+      assignRanks[0],
+      assignRanks[2],
+    ];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -32,9 +63,16 @@ class TopMoods extends StatelessWidget {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: moods.take(3).toList().map((e) {
-              final index = moods.indexOf(e);
+            children: top3Moods.map((e) {
+              final index = top3Moods.indexOf(e);
               final mood = e;
+              final color = localMoods
+                  .firstWhere(
+                    (element) =>
+                        element.mood.toLowerCase() == mood.mood!.toLowerCase(),
+                    orElse: () => localMoods.first,
+                  )
+                  .color;
 
               return Expanded(
                 flex: index == 1 ? 2 : 1,
@@ -47,16 +85,16 @@ class TopMoods extends StatelessWidget {
                       : EdgeInsets.symmetric(horizontal: 5.w),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50.r),
-                    color: mood.color.withOpacity(0.3),
+                    color: color.withOpacity(0.3),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SvgPicture.asset(
-                        getMoodIcon(mood.mood),
+                        getMoodIcon(mood.mood!),
                       ),
                       Text(
-                        mood.mood,
+                        mood.mood!.capitalizeFirst!,
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w600,
@@ -66,7 +104,7 @@ class TopMoods extends StatelessWidget {
                         padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: mood.color,
+                          color: color,
                         ),
                         child: Text(
                           index == 0

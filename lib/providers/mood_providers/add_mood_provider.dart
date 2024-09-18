@@ -7,6 +7,7 @@ import 'package:aura/helpers/show_toast.dart';
 import 'package:aura/models/local_mood_model.dart';
 import 'package:aura/models/mood_model.dart';
 import 'package:aura/providers/calendar_providers.dart';
+import 'package:aura/providers/stats_provider.dart';
 import 'package:aura/providers/streak_providers.dart';
 import 'package:aura/screens/add_mood/components/analyze_dialogue.dart';
 import 'package:aura/services/mood_service.dart';
@@ -157,6 +158,9 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
           }
           if (ref.exists(moodsListProvider)) {
             ref.invalidate(moodsListProvider);
+          }
+          if (ref.exists(statsProvider)) {
+            ref.invalidate(statsProvider);
           }
           if (ref.exists(moodsDateProvider(
             formatDate(DateTime.now(), [yyyy, '-', mm, '-', dd]),

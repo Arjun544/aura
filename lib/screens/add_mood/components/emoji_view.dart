@@ -19,10 +19,10 @@ class EmojiView extends StatelessWidget {
           height: context.height * 0.45,
           width: context.width,
           child: PageView.builder(
-            itemCount: moods.length,
-            onPageChanged: (value) => selectedMood.value = moods[value],
+            itemCount: localMoods.length,
+            onPageChanged: (value) => selectedMood.value = localMoods[value],
             itemBuilder: (context, index) {
-              final mood = moods[index];
+              final mood = localMoods[index];
               return Center(
                 child: Column(
                   children: [

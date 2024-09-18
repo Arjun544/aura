@@ -76,7 +76,7 @@ class MoodTile extends StatelessWidget {
                             .where((item) => item.score! > 0.3)
                             .toList()
                             .map((emotion) {
-                          final Color color = moods
+                          final Color color = localMoods
                               .firstWhere(
                                 (element) =>
                                     element.mood.toLowerCase() ==

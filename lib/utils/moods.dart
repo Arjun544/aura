@@ -1,7 +1,7 @@
 import 'package:aura/core/imports/core_imports.dart';
 import 'package:aura/models/local_mood_model.dart';
 
-final List<LocalMoodModel> moods = [
+final List<LocalMoodModel> localMoods = [
   LocalMoodModel(
     mood: 'Anger',
     emoji: AssetsManager.angryMood,
@@ -18,7 +18,7 @@ final List<LocalMoodModel> moods = [
     color: Colors.amber,
   ),
   LocalMoodModel(
-    mood: 'happy',
+    mood: 'Happy',
     emoji: AssetsManager.happyMood,
     color: AppColors.successColor,
   ),
