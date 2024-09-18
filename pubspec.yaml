@@ -17,7 +17,8 @@ dependencies:
   go_router: ^14.2.7
   flutter_svg: ^2.0.10+1
   flutter_hooks: ^0.20.5
-  hooks_riverpod: ^3.0.0-dev.3
+  hooks_riverpod: ^2.5.2
+  flutter_riverpod: ^2.5.1
   loading_animation_widget: ^1.2.1
   lottie: ^3.1.2
   flutter_remix: ^0.0.3

@@ -29,7 +29,7 @@ class StreakDates extends HookWidget {
             (i) => lastDate.add(Duration(days: i)),
           );
 
-          final allDates = [...streakDates, ...newDates].toSet().toList();
+          final allDates = <DateTime>{...streakDates, ...newDates}.toList();
           final date = allDates[index];
           final int todayIndex = allDates.indexWhere(
             (date) =>
