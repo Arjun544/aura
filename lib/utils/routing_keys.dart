@@ -8,5 +8,5 @@ final shellNavigatorCalendar =
     GlobalKey<NavigatorState>(debugLabel: 'shellCalendar');
 final shellNavigatorStats =
     GlobalKey<NavigatorState>(debugLabel: 'shellStats');
-final shellNavigatorNotifications =
-    GlobalKey<NavigatorState>(debugLabel: 'shellNotifications');
+final shellNavigatorSettings =
+    GlobalKey<NavigatorState>(debugLabel: 'shellSettings');

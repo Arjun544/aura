@@ -7,7 +7,11 @@ class Routes {
   static const String streak = '/streak';
   static const String calendar = '/calendar';
   static const String stats = '/stats';
+  static const String settings = '/settings';
 
-  // Profile Routes
+  // Settings Routes
   static const String profile = '/profile';
+  static const String socials = '/socials';
+
+
 }
