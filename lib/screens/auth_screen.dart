@@ -50,7 +50,7 @@ class AuthScreen extends ConsumerWidget {
                 style: TextStyle(
                   fontSize: 15.sp,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.customGreyDark,
+                  color: AppColors.customBlack.withOpacity(0.4),
                 ),
               )
                   .animate(onPlay: (controller) => controller.repeat())

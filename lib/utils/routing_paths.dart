@@ -10,8 +10,8 @@ class Routes {
   static const String settings = '/settings';
 
   // Settings Routes
-  static const String profile = '/profile';
-  static const String socials = '/socials';
+  static const String profile = 'profile';
+  static const String socials = 'socials';
 
 
 }

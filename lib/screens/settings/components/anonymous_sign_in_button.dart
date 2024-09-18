@@ -37,6 +37,7 @@ class AnonymousSignInButton extends StatelessWidget {
             ),
           ),
         ),
+        
       ),
     );
   }
