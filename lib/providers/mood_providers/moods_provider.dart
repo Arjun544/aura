@@ -9,7 +9,7 @@ final dayMoodProvider =
   return ref.read(moodServiceProvider).getMoodByDate(date: date);
 });
 
-final happyPercentageProvider = FutureProvider<List<double>>((ref) async {
+final happyPercentageProvider = FutureProvider<List<MoodModel>>((ref) async {
   ref.watch(userProvider.select((e) => e?.id));
   return ref.read(moodServiceProvider).getHappyPercentages();
 });

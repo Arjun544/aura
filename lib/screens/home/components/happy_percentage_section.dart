@@ -37,7 +37,7 @@ class HappyPercentageSection extends ConsumerWidget {
             trailing: Text(
               happyPercentages.valueOrNull == null
                   ? '0%'
-                  : '${happyPercentages.valueOrNull!.first.toStringAsFixed(0)}%',
+                  : '${happyPercentages.valueOrNull!.first.score!.toStringAsFixed(0)}%',
               style: TextStyle(
                 fontSize: 14.sp,
               ),
@@ -68,13 +68,15 @@ class HappyPercentageSection extends ConsumerWidget {
                             const FlSpot(4, 0.7),
                             const FlSpot(5, 0.1),
                           ]
-                        : happyPercentages.valueOrNull!
+                        : happyPercentages.valueOrNull!.reversed
+                            .toList()
                             .map(
                               (e) => FlSpot(
-                                happyPercentages.valueOrNull!
+                                happyPercentages.valueOrNull!.reversed
+                                    .toList()
                                     .indexOf(e)
                                     .toDouble(),
-                                e,
+                                e.score!,
                               ),
                             )
                             .toList(),

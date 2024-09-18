@@ -103,11 +103,11 @@ class MoodService {
   }
 
   /// Retrieves a list of happy percentages for the current user over the last 7 days.
-  Future<List<double>> getHappyPercentages() async {
+  Future<List<MoodModel>> getHappyPercentages() async {
     try {
-      final List<double> percentages = await _client
+      final List<MoodModel> percentages = await _client
           .from('percentages')
-          .select('happy_percentage')
+          .select('happy_percentage, created_at')
           .eq('user_id', _client.auth.currentUser!.id)
           .gte(
             'created_at',
@@ -117,10 +117,12 @@ class MoodService {
           .order('created_at')
           .withConverter(
             (value) => value.isEmpty
-                ? List.generate(7, (int index) => 0.0).toList()
+                ? List.generate(7, (int index) => MoodModel()).toList()
                 : value
                     .map(
-                      (e) => (e['happy_percentage'] as num).toDouble(),
+                      (e) => MoodModel(
+                        score: (e['happy_percentage'] as num).toDouble(),
+                      ),
                     )
                     .toList(),
           );
