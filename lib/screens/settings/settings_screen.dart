@@ -26,57 +26,12 @@ class SettingsScreen extends ConsumerWidget {
               const AnonymousSignInButton(),
             ],
             SizedBox(height: user?.isAnonymous ?? true ? 30.h : 40.h),
-            // ListTile(
-            //   contentPadding: EdgeInsets.zero,
-            //   leading: Container(
-            //     height: 45.sp,
-            //     width: 45.sp,
-            //     decoration: BoxDecoration(
-            //       color: context.theme.primaryColor,
-            //       borderRadius: BorderRadius.circular(15),
-            //       boxShadow: [
-            //         BoxShadow(
-            //           color:
-            //               context.isDarkMode ? Colors.black : Colors.grey[400]!,
-            //           blurRadius: 0.3,
-            //         ),
-            //       ],
-            //       image: DecorationImage(
-            //         fit: BoxFit.cover,
-            //         image: CachedNetworkImageProvider(
-            //           photo,
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            //   title: Text(
-            //     name,
-            //     style: TextStyle(
-            //       fontSize: 14.sp,
-            //       fontWeight: FontWeight.w600,
-            //     ),
-            //   ),
-            //   subtitle: Text(
-            //     user!.isAnonymous ? 'email' : user.email ?? '',
-            //     style: TextStyle(
-            //       fontSize: 11.sp,
-            //     ),
-            //   ),
-            // ),
             SettingTile(
               title: 'Edit Profile',
               icon: FlutterRemix.user_4_fill,
               color: Colors.blue,
               onPressed: () =>
                   context.push('${Routes.settings}/${Routes.profile}'),
-            ),
-            SizedBox(height: 15.h),
-            SettingTile(
-              title: 'Connect socials',
-              icon: IconsaxBold.link_2,
-              color: AppColors.successColor,
-              onPressed: () =>
-                  context.push('${Routes.settings}/${Routes.socials}'),
             ),
             SizedBox(height: 15.h),
             SettingTile(

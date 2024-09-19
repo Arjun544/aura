@@ -6,8 +6,6 @@ import 'package:aura/core/imports/packages_imports.dart';
 import 'package:aura/helpers/show_toast.dart';
 import 'package:aura/services/auth_service.dart';
 
-import 'user_providers/user_provider.dart';
-
 final anonymousAuthProvider =
     AutoDisposeAsyncNotifierProvider<AnonymousAuthNotifier, void>(
   () => AnonymousAuthNotifier(),

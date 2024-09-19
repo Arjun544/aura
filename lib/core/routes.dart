@@ -7,7 +7,6 @@ import 'package:aura/screens/calendar/calendar_screen.dart';
 import 'package:aura/screens/home/home_screen.dart';
 import 'package:aura/screens/settings/edit_profile_screen.dart';
 import 'package:aura/screens/settings/settings_screen.dart';
-import 'package:aura/screens/settings/socials_screen.dart';
 import 'package:aura/screens/splash_screen.dart';
 import 'package:aura/screens/stats/Stats_screen.dart';
 import 'package:aura/screens/streak/streak_screen.dart';
@@ -117,12 +116,7 @@ final routes = GoRouter(
                     key: state.pageKey,
                   ),
                 ),
-                GoRoute(
-                  path: Routes.socials,
-                  builder: (context, state) => SocialsScreen(
-                    key: state.pageKey,
-                  ),
-                ),
+                
               ],
             ),
           ],
