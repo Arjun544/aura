@@ -6,7 +6,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import '../core/imports/core_imports.dart';
 import '../core/imports/packages_imports.dart';
 
-final aiServiceProvider = AutoDisposeProvider<AiService>((ref) {
+final aiServiceProvider = AutoDisposeProvider<AiService>((_) {
   final model = GenerativeModel(
     model: 'gemini-1.5-flash-latest',
     apiKey: dotenv.get('GEMINI_API_KEY'),
@@ -14,19 +14,15 @@ final aiServiceProvider = AutoDisposeProvider<AiService>((ref) {
 
   return AiService(
     model: model,
-    ref: ref,
   );
 });
 
 class AiService {
   final GenerativeModel _model;
-  final AutoDisposeProviderRef<AiService> _ref;
 
   AiService({
     required GenerativeModel model,
-    required AutoDisposeProviderRef<AiService> ref,
-  })  : _model = model,
-        _ref = ref;
+  }) : _model = model;
 
   Future<List<String>> recommendActivities({
     required String mood,
