@@ -18,12 +18,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       centerTitle: true,
       elevation: 0,
-      title: Text(
-        title.capitalizeFirst!,
-        style: context.theme.appBarTheme.titleTextStyle!.copyWith(
-          fontWeight: FontWeight.w600,
-        ),
-      ),
+      title: Text(title.capitalizeFirst!,
+          style: TextStyle(
+            color: AppColors.customBlack,
+            fontSize: 13.sp,
+            fontWeight: FontWeight.w600,
+          )),
       leading: context.canPop() || onPressed != null
           ? GestureDetector(
               onTap: () => onPressed != null

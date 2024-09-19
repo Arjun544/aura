@@ -14,10 +14,6 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
-    final Map<String, dynamic>? metaData = user?.userMetadata;
-    final String name = metaData?['name'] ?? 'Unknown';
-    final String photo = metaData?['photo'] ??
-        'https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1726012800&semt=ais_hybrid';
 
     return Scaffold(
       appBar: const TopBar(),

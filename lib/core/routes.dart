@@ -5,7 +5,7 @@ import 'package:aura/screens/auth_screen.dart';
 import 'package:aura/screens/bottom_nav_screen.dart';
 import 'package:aura/screens/calendar/calendar_screen.dart';
 import 'package:aura/screens/home/home_screen.dart';
-import 'package:aura/screens/settings/profile_screen.dart';
+import 'package:aura/screens/settings/edit_profile_screen.dart';
 import 'package:aura/screens/settings/settings_screen.dart';
 import 'package:aura/screens/settings/socials_screen.dart';
 import 'package:aura/screens/splash_screen.dart';
@@ -113,7 +113,7 @@ final routes = GoRouter(
               routes: [
                 GoRoute(
                   path: Routes.profile,
-                  builder: (context, state) => ProfileScreen(
+                  builder: (context, state) => EditProfileScreen(
                     key: state.pageKey,
                   ),
                 ),
