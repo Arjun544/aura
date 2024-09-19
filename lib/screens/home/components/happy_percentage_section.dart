@@ -47,7 +47,8 @@ class HappyPercentageSection extends ConsumerWidget {
           Expanded(
             child: LineChart(
               LineChartData(
-                lineTouchData: const LineTouchData(enabled: false),
+                minX: 0,
+                minY: 0,
                 titlesData: const FlTitlesData(
                   show: false,
                 ),

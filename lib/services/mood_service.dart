@@ -127,7 +127,17 @@ class MoodService {
                     .toList(),
           );
 
-      return percentages;
+      return percentages.length == 1
+          ? [
+              ...percentages,
+              ...List.generate(
+                7 - percentages.length,
+                (int index) => MoodModel(
+                  score: 0.0,
+                ),
+              )
+            ]
+          : percentages;
     } catch (e) {
       logError(e.toString());
       throw const Failure('Failed to get happy percentage');

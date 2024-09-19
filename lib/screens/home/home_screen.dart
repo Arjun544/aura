@@ -20,10 +20,10 @@ class HomeScreen extends ConsumerWidget {
       appBar: const TopBar(),
       body: RefreshIndicator(
         onRefresh: () async {
-          ref.invalidate(happyPercentageProvider);
           ref.invalidate(dayMoodProvider);
           ref.invalidate(userProvider);
           ref.invalidate(streakCountProvider);
+          ref.invalidate(happyPercentageProvider);
         },
         color: AppColors.primary,
         backgroundColor: Colors.white,
