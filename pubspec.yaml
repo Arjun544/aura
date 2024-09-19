@@ -38,6 +38,7 @@ dependencies:
   timeago: ^3.7.0
   timeago_flutter: ^3.7.0
   google_generative_ai: ^0.4.6
+  icons_launcher: ^3.0.0
   
 dev_dependencies:
   flutter_test:

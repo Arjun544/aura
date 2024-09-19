@@ -11,7 +11,4 @@ class Routes {
 
   // Settings Routes
   static const String profile = 'profile';
-  static const String socials = 'socials';
-
-
 }
