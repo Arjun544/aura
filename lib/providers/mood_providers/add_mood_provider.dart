@@ -153,6 +153,7 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
           );
           ref.invalidate(happyPercentageProvider);
           ref.invalidate(streakCountProvider);
+          ref.invalidate(latestMoodProvider);
           if (ref.exists(streakProvider)) {
             ref.invalidate(streakProvider);
           }

@@ -81,13 +81,32 @@ class MoodService {
     }
   }
 
+  Future<MoodModel> getLatestMood() async {
+    try {
+      final newMood = await _client
+          .from('moods')
+          .select('mood, note, created_at')
+          .eq('user_id', _client.auth.currentUser!.id)
+          .order('created_at')
+          .limit(1)
+          .withConverter(
+            (value) => MoodModel.fromJson(value.isEmpty ? {} : value.first),
+          );
+
+      return newMood;
+    } catch (e) {
+      logError(e.toString());
+      throw const Failure('Failed to get mood');
+    }
+  }
+
   Future<MoodModel> getMoodByDate({
     required String date,
   }) async {
     try {
       final newMood = await _client
           .from('moods')
-          .select('mood, created_at')
+          .select('mood, note, created_at')
           .eq('date', date)
           .order('created_at')
           .limit(1)

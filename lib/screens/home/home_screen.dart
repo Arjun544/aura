@@ -24,6 +24,7 @@ class HomeScreen extends ConsumerWidget {
           ref.invalidate(userProvider);
           ref.invalidate(streakCountProvider);
           ref.invalidate(happyPercentageProvider);
+          ref.invalidate(latestMoodProvider);
         },
         color: AppColors.primary,
         backgroundColor: Colors.white,
