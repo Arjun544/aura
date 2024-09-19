@@ -25,9 +25,11 @@ class SettingsScreen extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            SizedBox(height: 30.h),
-            const AnonymousSignInButton(),
-            SizedBox(height: 30.h),
+            if (user?.isAnonymous ?? true) ...[
+              SizedBox(height: 30.h),
+              const AnonymousSignInButton(),
+            ],
+            SizedBox(height: user?.isAnonymous ?? true ? 30.h : 40.h),
             // ListTile(
             //   contentPadding: EdgeInsets.zero,
             //   leading: Container(
@@ -83,11 +85,11 @@ class SettingsScreen extends ConsumerWidget {
             SizedBox(height: 15.h),
             SettingTile(
               title: 'Logout',
-              icon: IconsaxBold.logout_1,
+              icon: IconsaxBold.logout,
               color: AppColors.errorColor,
               onPressed: () async {
                 await ref.read(authServiceProvider).logout();
-                ref.read(userProvider.notifier).update((user) => null);
+                ref.invalidate(userProvider);
                 if (context.mounted) {
                   context.go(Routes.auth);
                 }
@@ -98,7 +100,7 @@ class SettingsScreen extends ConsumerWidget {
               heightFactor: 2,
               child: Text(
                 'Joined Aura ${timeago.format(
-                  DateTime.parse(user!.createdAt),
+                  DateTime.parse(user?.createdAt ?? DateTime.now().toString()),
                   allowFromNow: true,
                 )} ago',
                 style: TextStyle(

@@ -63,8 +63,11 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
             builder: (context, ref, child) {
               final Map<String, dynamic>? metaData =
                   ref.watch(userProvider)?.userMetadata;
-              final String photo = metaData?['photo'] ??
-                  'https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1726012800&semt=ais_hybrid';
+              final List<UserIdentity> identities =
+                  ref.watch(userProvider)?.identities ?? [];
+              final String? photo = metaData?['photo'] ?? identities.isEmpty
+                  ? null
+                  : identities.first.identityData?['avatar_url'];
 
               return InkWell(
                 onTap: () => selectImage(),
@@ -84,9 +87,11 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
                     ],
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: CachedNetworkImageProvider(
-                        photo,
-                      ),
+                      image: photo == null
+                          ? const AssetImage(AssetsManager.avatar)
+                          : CachedNetworkImageProvider(
+                              photo,
+                            ),
                     ),
                   ),
                 ),

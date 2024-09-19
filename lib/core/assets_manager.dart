@@ -8,6 +8,9 @@ class AssetsManager {
   // static const String appLogoPng = '$brandCommon/launcher.png';
   static const String appLogo = '$brandCommon/logo.svg';
 
+  // Images assets
+  static const String avatar = '$imagesCommon/avatar.png';
+
   // Animations assets
   static const String logoAnimation = '$animationsCommon/ai.json';
   static const String audioWavesAnimation = '$animationsCommon/audio_waves.json';

@@ -6,6 +6,8 @@ import 'package:aura/core/imports/packages_imports.dart';
 import 'package:aura/helpers/show_toast.dart';
 import 'package:aura/services/auth_service.dart';
 
+import 'user_providers/user_provider.dart';
+
 final anonymousAuthProvider =
     AutoDisposeAsyncNotifierProvider<AnonymousAuthNotifier, void>(
   () => AnonymousAuthNotifier(),
@@ -64,6 +66,28 @@ class GmailAuthNotifier extends AutoDisposeAsyncNotifier {
         if (context.mounted && data == true) {
           state = const AsyncData(true);
           context.go(Routes.home);
+        }
+      },
+    );
+  }
+
+  Future<void> linkIdentity({
+    required BuildContext context,
+  }) async {
+    state = const AsyncLoading();
+
+    final response = await ref.read(authServiceProvider).linkIdentity();
+
+    response.mapBoth(
+      onLeft: (l) {
+        log(l.error.toString());
+        state = AsyncValue.error(l.error.toString(), StackTrace.current);
+        showToast(context, message: l.error.toString(), status: 'error');
+      },
+      onRight: (data) {
+        if (context.mounted && data == true) {
+          state = const AsyncData(true);
+          Navigator.of(context, rootNavigator: true).pop();
         }
       },
     );

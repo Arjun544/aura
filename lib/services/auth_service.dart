@@ -28,8 +28,8 @@ class AuthService {
       final hashedNonce = sha256.convert(utf8.encode(rawNonce)).toString();
 
       final clientId = Platform.isIOS
-          ? '81060931160-mtf9ddlk7hofqg3ua54jomgb3nu3c2r9.apps.googleusercontent.com'
-          : '81060931160-3end1kftav59msgolumc56j0arj60hos.apps.googleusercontent.com';
+          ? dotenv.env['GOOGLE_CLIENT_ID_IOS']!
+          : dotenv.env['GOOGLE_CLIENT_ID_ANDROID']!;
 
       final redirectUrl = '${clientId.split('.').reversed.join('.')}:/';
 
@@ -102,6 +102,21 @@ class AuthService {
     } catch (e) {
       logError(e.toString());
       return const Left(Failure('Failed to login'));
+    }
+  }
+
+  FutureEither<bool> linkIdentity() async {
+    try {
+      final isLinked = await _client.auth.linkIdentity(
+        OAuthProvider.google,
+        authScreenLaunchMode: LaunchMode.externalApplication,
+        redirectTo: 'io.supabase.aura://login-callback/',
+      );
+
+      return Right(isLinked);
+    } catch (e) {
+      logError(e.toString());
+      return const Left(Failure('Failed to link identity'));
     }
   }
 
