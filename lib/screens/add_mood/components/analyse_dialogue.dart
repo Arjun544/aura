@@ -8,10 +8,10 @@ import 'package:aura/widgets/custom_text_button.dart';
 import 'package:blobs/blobs.dart';
 import 'package:flutter_svg/svg.dart';
 
-class AnalyzeDialogue extends ConsumerWidget {
+class AnalyseDialogue extends ConsumerWidget {
   final MoodModel mood;
   final TextEditingController note;
-  const AnalyzeDialogue({
+  const AnalyseDialogue({
     super.key,
     required this.mood,
     required this.note,
@@ -21,8 +21,7 @@ class AnalyzeDialogue extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     logSuccess(mood.mood.toString());
     final newMood = localMoods.firstWhere(
-      (element) =>
-          element.mood.toLowerCase() == mood.mood!.toLowerCase() ,
+      (element) => element.mood.toLowerCase() == mood.mood!.toLowerCase(),
     );
 
     final isLoading = ref.watch(addMoodProvider).isLoading;
@@ -43,7 +42,7 @@ class AnalyzeDialogue extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
-              'Successfully Analyzed',
+              'Successfully Analysed',
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w500,

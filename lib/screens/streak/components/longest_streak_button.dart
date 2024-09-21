@@ -36,23 +36,7 @@ class LongestStreakButton extends StatelessWidget {
             ),
           ],
         ),
-        // Container(
-        //   height: 50.h,
-        //   width: context.width * 0.6,
-        //   alignment: Alignment.center,
-        //   decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.circular(20.r),
-        //     color: AppColors.primary,
-        //   ),
-        //   child: Text(
-        //     'Longest Streak',
-        //     style: TextStyle(
-        //       color: Colors.white,
-        //       fontSize: 16.sp,
-        //       fontWeight: FontWeight.w500,
-        //     ),
-        //   ),
-        // ),
+       
       ],
     );
   }

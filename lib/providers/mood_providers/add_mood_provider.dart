@@ -9,7 +9,7 @@ import 'package:aura/models/mood_model.dart';
 import 'package:aura/providers/calendar_providers.dart';
 import 'package:aura/providers/stats_provider.dart';
 import 'package:aura/providers/streak_providers.dart';
-import 'package:aura/screens/add_mood/components/analyze_dialogue.dart';
+import 'package:aura/screens/add_mood/components/analyse_dialogue.dart';
 import 'package:aura/services/mood_service.dart';
 import 'package:aura/widgets/custom_dialogue.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,7 +24,7 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
   @override
   FutureOr build() {}
 
-  Future<void> handleAnalyze({
+  Future<void> handleAnalyse({
     required BuildContext context,
     required String type,
     required TextEditingController textController,
@@ -56,7 +56,7 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
               state = const AsyncData(null);
               Navigator.of(context, rootNavigator: true).pop();
               showCustomDialogue(
-                child: AnalyzeDialogue(
+                child: AnalyseDialogue(
                   mood: data,
                   note: noteController,
                 ),
@@ -89,7 +89,7 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
               state = const AsyncData(null);
               Navigator.of(context, rootNavigator: true).pop();
               showCustomDialogue(
-                child: AnalyzeDialogue(
+                child: AnalyseDialogue(
                   mood: data,
                   note: noteController,
                 ),
@@ -106,7 +106,7 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
         state = const AsyncData(null);
         Navigator.of(context, rootNavigator: true).pop();
         showCustomDialogue(
-          child: AnalyzeDialogue(
+          child: AnalyseDialogue(
             mood: MoodModel(
               mood: emoji.value.mood.toLowerCase(),
               score: 100,

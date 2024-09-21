@@ -114,12 +114,12 @@ class AddMoodScreen extends HookConsumerWidget {
               CustomButton(
                   width: context.width * 0.6,
                   height: 50.h,
-                  text: 'Analyze',
+                  text: 'Analyse',
                   borderRadius: 22,
                   isLoading: isAnalyzing,
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      await ref.read(addMoodProvider.notifier).handleAnalyze(
+                      await ref.read(addMoodProvider.notifier).handleAnalyse(
                             context: context,
                             type: controller.index == 0
                                 ? 'text'
