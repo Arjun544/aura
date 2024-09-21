@@ -30,6 +30,8 @@ serve(async (req) => {
       model: 'dima806/facial_emotions_image_detection',
     });
 
+    console.log(result);
+
     // Convert score to percentage and round to 2 decimal places
     const emotions = result.map((emotion) => ({
       label: emotion.label,
@@ -44,6 +46,7 @@ serve(async (req) => {
     // Format the JSON response
     const response = {
       mood: topEmotion.label,
+      score: topEmotion.score,
       emotions: emotions,
     };
 

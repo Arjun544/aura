@@ -48,10 +48,10 @@ class MoodModel {
         mood: json["mood"] == 'joy' ? 'happy' : json["mood"],
         note: json["note"],
         score: json["score"]?.toDouble(),
-        emotions: json["mood_data"] == null
+        emotions: json["emotions"] == null
             ? []
             : List<Emotion>.from(
-                json["mood_data"]!.map((x) => Emotion.fromJson(x)),
+                json["emotions"]!.map((x) => Emotion.fromJson(x)),
               ),
         date: json["date"] == null
             ? null
@@ -66,12 +66,12 @@ class MoodModel {
         "note": note,
         "score": score,
         "date": date,
-        "mood_data": emotions == null
+        "emotions": emotions == null
             ? []
             : List<dynamic>.from(
                 emotions!.map((x) => x.toJson()),
               ),
-        "created_at": createdAt!.toUtc().toLocal().toString(),
+        "created_at": createdAt?.toUtc().toLocal().toString(),
       };
 }
 

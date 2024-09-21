@@ -123,7 +123,7 @@ class AddMoodNotifier extends AutoDisposeAsyncNotifier {
   Future<void> addMood({
     required BuildContext context,
     required TextEditingController noteController,
-    required MoodModel mood,
+    required MoodModel mood
   }) async {
     state = const AsyncLoading();
 

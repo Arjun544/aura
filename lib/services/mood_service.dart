@@ -28,9 +28,12 @@ class MoodService {
         body: {'text': text},
       );
 
-      final moods = MoodModel.fromJson(res.data);
+      final mood = MoodModel.fromJson(res.data);
 
-      return Right(moods);
+      logSuccess(mood.toJson().toString());
+      logSuccess(mood.emotions!.length.toString());
+
+      return Right(mood);
     } catch (e) {
       logError(e.toString());
       return const Left(Failure('Failed to detect mood'));
@@ -46,9 +49,11 @@ class MoodService {
         body: {'image': image},
       );
 
-      final moods = MoodModel.fromJson(res.data);
+      final mood = MoodModel.fromJson(res.data);
 
-      return Right(moods);
+      logSuccess(mood.toJson().toString());
+
+      return Right(mood);
     } catch (e) {
       logError(e.toString());
       return const Left(Failure('Failed to detect mood'));
@@ -60,13 +65,14 @@ class MoodService {
     required String note,
   }) async {
     try {
+      logInfo(mood.toJson().toString());
       await _client.from('moods').insert({
         'user_id': _client.auth.currentUser!.id,
         'mood': mood.mood,
         'score': mood.score,
         'note': note,
         'date': formatDate(DateTime.now(), [yyyy, '-', mm, '-', dd]),
-        'mood_data': [
+        'emotions': [
           ...mood.emotions!.map((e) => {
                 'label': e.label,
                 'score': e.score,
