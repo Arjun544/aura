@@ -11,12 +11,8 @@ Aura is a sophisticated mood tracking and mental wellness application built with
 
 | ![App Screenshot 1](https://tinyurl.com/mr3f26ej) | ![App Screenshot 2](https://tinyurl.com/bdcrsnvr) | ![App Screenshot 3](https://tinyurl.com/36z2yzb) | ![App Screenshot 4](https://tinyurl.com/26kw5x9d) | ![App Screenshot 5](https://tinyurl.com/4ym22ksd) |
 | --- | --- | --- | --- | --- |
-| ![App Screenshot 6](https://tinyurl.com/cf2rx9rz) | ![App Screenshot 7](https://tinyurl.com/bde75jxj) | ![App Screenshot 8](https://tinyurl.com/2sp6fe5b) | ![App Screenshot 9](https://tinyurl.com/yt6zu928) | ![App Screenshot 10](https://tinyurl.com/ms7nwkfw) | ![App Screenshot 11](https://tinyurl.com/mr3dsrmv) | ![App Screenshot 12](https://tinyurl.com/yu3ddd5m) |
-
-<!-- ## Screenshots
-
-| ![App Screenshot 1](https://tinyurl.com/mr3f26ej) | ![App Screenshot 2](https://tinyurl.com/bdcrsnvr) | ![App Screenshot 3](https://tinyurl.com/36z2yzb) | ![App Screenshot 4](https://tinyurl.com/26kw5x9d) | ![App Screenshot 4](https://tinyurl.com/4ym22ksd) | ![App Screenshot 5](https://tinyurl.com/cf2rx9rz) | ![App Screenshot 6](https://tinyurl.com/bde75jxj) | ![App Screenshot 7](https://tinyurl.com/2sp6fe5b) | ![App Screenshot 8](https://tinyurl.com/yt6zu928) | ![App Screenshot 9](https://tinyurl.com/ms7nwkfw) | ![App Screenshot 10](https://tinyurl.com/mr3dsrmv) | ![App Screenshot 11](https://tinyurl.com/yu3ddd5m) |
-| --- | --- | --- | --- |  --- | --- | --- | --- | --- | --- | --- | --- | -->
+| ![App Screenshot 6](https://tinyurl.com/cf2rx9rz) | ![App Screenshot 7](https://tinyurl.com/bde75jxj) | ![App Screenshot 8](https://tinyurl.com/2sp6fe5b) | ![App Screenshot 9](https://tinyurl.com/yt6zu928) | ![App Screenshot 10](https://tinyurl.com/ms7nwkfw) | ![App Screenshot 11](https://tinyurl.com/mr3dsrmv) |
+ ![App Screenshot 12](https://tinyurl.com/yu3ddd5m) |
 
 
 ## Key Features
