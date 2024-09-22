@@ -70,7 +70,7 @@ class MoodTile extends StatelessWidget {
                         ),
                       ],
                     ),
-                    if (mood.emotions != null)
+                    if (mood.emotions != null && mood.emotions!.isNotEmpty)
                       Column(
                         children: mood.emotions!
                             .where((item) => item.score! > 0.3)
@@ -83,6 +83,8 @@ class MoodTile extends StatelessWidget {
                                     emotion.label!.toLowerCase(),
                               )
                               .color;
+
+                          logSuccess(emotion.label.toString());
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 4),
                             child: SizedBox(
