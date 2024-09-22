@@ -21,6 +21,9 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
+    final photo = getUserPhoto(user);
+
     void selectImage() async {
       final hasPermission =
           await askPermission(name: 'Photos', permission: Permission.photos);
@@ -59,44 +62,31 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Consumer(
-            builder: (context, ref, child) {
-              final Map<String, dynamic>? metaData =
-                  ref.watch(userProvider)?.userMetadata;
-              final List<UserIdentity> identities =
-                  ref.watch(userProvider)?.identities ?? [];
-              final String? photo = metaData?['photo'] ?? identities.isEmpty
-                  ? null
-                  : identities.first.identityData?['avatar_url'];
-
-              return InkWell(
-                onTap: () => selectImage(),
-                child: Container(
-                  height: 45.sp,
-                  width: 45.sp,
-                  decoration: BoxDecoration(
-                    color: context.theme.primaryColor,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: context.isDarkMode
-                            ? Colors.black
-                            : Colors.grey[400]!,
-                        blurRadius: 0.3,
-                      ),
-                    ],
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: photo == null
-                          ? const AssetImage(AssetsManager.avatar)
-                          : CachedNetworkImageProvider(
-                              photo,
-                            ),
-                    ),
+          InkWell(
+            onTap: () => selectImage(),
+            child: Container(
+              height: 45.sp,
+              width: 45.sp,
+              decoration: BoxDecoration(
+                color: context.theme.primaryColor,
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color:
+                        context.isDarkMode ? Colors.black : Colors.grey[400]!,
+                    blurRadius: 0.3,
                   ),
+                ],
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: photo == null
+                      ? const AssetImage(AssetsManager.avatar)
+                      : CachedNetworkImageProvider(
+                          photo,
+                        ),
                 ),
-              );
-            },
+              ),
+            ),
           ),
           GestureDetector(
             onTap: () => context.go(Routes.streak),
@@ -135,6 +125,16 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
         ],
       ),
     );
+  }
+
+  String? getUserPhoto(User? user) {
+    final Map<String, dynamic>? metaData = user?.userMetadata;
+    final List<UserIdentity> identities = user?.identities ?? [];
+
+    return metaData?['photo'] ??
+        (identities.isNotEmpty && identities.first.identityData != null
+            ? identities.first.identityData!['avatar_url']
+            : null);
   }
 
   @override
